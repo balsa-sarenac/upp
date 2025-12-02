@@ -1,16 +1,16 @@
 ---
 title: "Управљање пословним процесима – Увод"
 lang: sr
-mainfont: "SF Pro Text"
-monofont: "SF Mono"
+mainfont: "DejaVu Sans"
+monofont: "DejaVu Sans Mono"
 header-includes:
   - \usepackage{fontspec}
   - \usepackage{polyglossia}
   - \setmainlanguage{serbian}
   - \setotherlanguage{english}
-  - \setmainfont{SF Pro Text}
-  - \setsansfont{SF Pro Display}
-  - \setmonofont{SF Mono}
+  - \setmainfont{DejaVu Sans}
+  - \setsansfont{DejaVu Sans}
+  - \setmonofont{DejaVu Sans Mono}
 ---
 
 ## Увод у предмет
