@@ -16,7 +16,7 @@ header-includes:
 ## Увод у предмет
 
 - Фокус: process-driven апликације
-- Алат: Bonita BPM (Бонита платформа)
+- Алат: Bonita BPM ([верзија 2023](https://www.bonitasoft.com/old-versions))
 - Кључни појмови:
   - пословни процеси
   - BPMN нотација
