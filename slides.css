@@ -1,0 +1,32 @@
+/* Global base font size a bit smaller than default */
+.reveal {
+  font-size: 24px; /* try 24–28 depending on taste */
+}
+
+/* Titles a bit smaller */
+.reveal h1 {
+  font-size: 1.6em;
+}
+
+.reveal h2 {
+  font-size: 1.4em;
+}
+
+.reveal h3 {
+  font-size: 1.2em;
+}
+
+/* Lists tighter */
+.reveal ul {
+  font-size: 0.95em;
+}
+
+/* Code slightly smaller than body */
+.reveal pre code {
+  font-size: 0.8em;
+}
+
+/* Optionally reduce padding on slides */
+.reveal .slides > section {
+  padding: 10px 40px;
+}

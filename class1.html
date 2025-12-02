@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Управљање пословним процесима – Увод</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+  
+  
+  
+  
+  
+  
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Управљање пословним процесима – Увод</h1>
+</section>
+
+<section id="увод-у-предмет" class="slide level2">
+<h2>Увод у предмет</h2>
+<ul>
+<li>Фокус: process-driven апликације</li>
+<li>Алат: Bonita BPM (Бонита платформа)</li>
+<li>Кључни појмови:
+<ul>
+<li>пословни процеси</li>
+<li>BPMN нотација</li>
+<li>BPM платформа (engine, portal и апликације)</li>
+</ul></li>
+</ul>
+</section>
+<section id="шта-ћете-научити" class="slide level2">
+<h2>Шта ћете научити</h2>
+<ul>
+<li>Како да:
+<ul>
+<li>моделирате пословни процес у BPMN-у</li>
+<li>дефинишете организацију и улоге</li>
+<li>моделирате пословне податке (Business Data Model)</li>
+<li>имплементирате process-driven апликацију у Бонити</li>
+</ul></li>
+<li>Циљ:
+<ul>
+<li>да можете да „читате“ и градите системе где је
+<strong>процес</strong> центар, а код „попуњава“ логику</li>
+</ul></li>
+</ul>
+</section>
+<section id="зашто-уопште-процеси" class="slide level2">
+<h2>Зашто уопште процеси?</h2>
+<ul>
+<li>Савремени системи:
+<ul>
+<li>много корисника, тимова, организација</li>
+<li>више сервиса / микросервиса</li>
+<li>регулатива, аудити, SLA-ови</li>
+</ul></li>
+<li>Проблем: сложеност</li>
+<li>Софтвер више није само „функција = резултат“, већ <strong>дуготрајни
+процес</strong>:
+<ul>
+<li>више корака</li>
+<li>више учесника</li>
+<li>више стања</li>
+</ul></li>
+</ul>
+</section>
+<section id="шта-је-пословни-процес" class="slide level2">
+<h2>Шта је пословни процес?</h2>
+<blockquote>
+<p>Скуп повезаних активности које заједно остварују пословни циљ.</p>
+</blockquote>
+<p>Примери:</p>
+<ul>
+<li>Пријава и одобрење пријаве за испит</li>
+<li>Обрада рекламације корисника</li>
+<li>Набавка опреме / тендер</li>
+<li>Онбоардинг новог запосленог</li>
+</ul>
+<p>Карактеристике:</p>
+<ul>
+<li>више улога (студент, референт, професор…)</li>
+<li>рокови и услови</li>
+<li>паузе између корака (чека се људска акција)</li>
+</ul>
+</section>
+<section id="пример" class="slide level2">
+<h2>Пример</h2>
+<p>Размислите о једном процесу који познајете:</p>
+<ul>
+<li><p>на факултету (пријава испита, одбрана рада)</p></li>
+<li><p>на послу (обрада тикета, онбоардинг запосленог)</p></li>
+<li><p>у свакодневном животу (онлајн куповина, поправка
+аутомобила)</p></li>
+<li><p>Описати укратко један реалан процес који познајете:</p>
+<ul>
+<li>улоге,</li>
+<li>главне активности,</li>
+<li>кључне податке,</li>
+<li>1 пример где је битно:
+<ul>
+<li>време (рок) или</li>
+<li>одобравање/одлука</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="зашто-је-лоше-ако-је-све-само-у-коду" class="slide level2">
+<h2>Зашто је лоше ако је све „само у коду“?</h2>
+<ul>
+<li>Пословна правила „закопана“ у разним сервисима</li>
+<li>Тешко је објаснити процес некоме ко није писао код</li>
+<li>Промене правила = промене кода на више места</li>
+<li>Тешко је видети:
+<ul>
+<li>где се тренутно „заглавила“ нека ствар</li>
+<li>ко је одговоран за следећи корак</li>
+<li>колико дуго нешто траје</li>
+</ul></li>
+</ul>
+<p>Идеја:<br />
+<strong>процес</strong> да буде експлицитно описан, а код да га
+подржава.</p>
+</section>
+<section id="bpmn-business-process-model-and-notation"
+class="slide level2">
+<h2>BPMN – Business Process Model and Notation</h2>
+<ul>
+<li>Стандардизовани језик за моделовање пословних процеса</li>
+<li>Развијен од стране OMG (Object Management Group)</li>
+<li>Омогућава да:
+<ul>
+<li>прецизно опишемо токове, догађаје, задатке, одлуке, улоге…</li>
+<li>комуницирамо између бизниса и ИТ-а</li>
+<li>анализирамо и оптимизујемо процесе</li>
+</ul></li>
+</ul>
+<p>BPMN дијаграм може бити: - визуелна документација - али и
+<strong>основа за извршавање</strong> у BPM engine-у</p>
+</section>
+<section id="зашто-су-bpmn-модели-корисни" class="slide level2">
+<h2>Зашто су BPMN модели корисни?</h2>
+<ul>
+<li>Додељивање задатака различитим корисницима
+<ul>
+<li>сваки запослени види само своје таскове</li>
+</ul></li>
+<li>Подршка за организациону структуру
+<ul>
+<li>радници, шефови, одобравања, провере</li>
+</ul></li>
+<li>Рад са временом:
+<ul>
+<li>дефинисање рокова, подсетника, ескалација (тајмери)</li>
+</ul></li>
+<li>Различити токови извршавања у зависности од услова
+<ul>
+<li>шта ако је износ &gt; X?</li>
+<li>шта ако није стигао одговор у року?</li>
+</ul></li>
+</ul>
+</section>
+<section id="од-дијаграма-до-извршног-система" class="slide level2">
+<h2>Од дијаграма до извршног система</h2>
+<p>Идеја:</p>
+<ol type="1">
+<li>Моделујемо процес у BPMN-у</li>
+<li>Деплојујемо модел у BPM engine</li>
+<li>Engine:
+<ul>
+<li>зна којем кориснику да додели који таск</li>
+<li>зна када да позове спољни сервис</li>
+<li>бележи историју и стање сваке инстанце процеса</li>
+</ul></li>
+</ol>
+</section>
+<section id="bonita-bpm-платформа" class="slide level2">
+<h2>Bonita BPM платформа</h2>
+<ul>
+<li>Платформа за:
+<ul>
+<li>моделовање,</li>
+<li>аутоматизацију,</li>
+<li>извршење и надзор пословних процеса</li>
+</ul></li>
+<li>Кључне функционалности:
+<ul>
+<li>графичко моделирање у BPMN-у</li>
+<li>извршење процеса</li>
+<li>управљање задацима</li>
+<li>праћење инстанци процеса</li>
+</ul></li>
+<li>Наш главни алат на вежбама</li>
+</ul>
+</section>
+<section id="бонита-два-главна-дела" class="slide level2">
+<h2>Бонита: два главна дела</h2>
+<ul>
+<li><strong>Bonita Studio</strong>
+<ul>
+<li>развојно окружење</li>
+<li>креирање BPMN процеса, BDM-а, UI страница и форми</li>
+</ul></li>
+<li><strong>Bonita Platform</strong>
+<ul>
+<li>извршно окружење</li>
+<li>садржи:
+<ul>
+<li>Bonita Engine (систем за извршење процеса)</li>
+<li>Bonita Portal (веб апликација за кориснике и администраторе)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Studio -&gt; Deploy -&gt; Engine – Portal &lt;- Корисници</p>
+</section>
+<section id="bonita-studio-преглед" class="slide level2">
+<h2>Bonita Studio (преглед)</h2>
+<ul>
+<li>Графичко окружење за:
+<ul>
+<li>креирање процеса (whiteboard)</li>
+<li>дефинисање модела података (Business Data Model)</li>
+<li>дизајн корисничког интерфејса (странице и форме)</li>
+</ul></li>
+<li>Користе га:
+<ul>
+<li>процес аналитичари и дизајнери</li>
+<li>бекенд девелопери (конектори, логика)</li>
+<li>фронтенд девелопери (странице/форме)</li>
+</ul></li>
+<li>Садржи и локалну платформу (Tomcat, Engine, Portal, H2 база)</li>
+</ul>
+</section>
+<section id="bonita-platform-и-portal" class="slide level2">
+<h2>Bonita Platform и Portal</h2>
+<ul>
+<li><strong>Bonita Engine</strong>
+<ul>
+<li>извршава процесе</li>
+<li>чува стање и историју у бази</li>
+</ul></li>
+<li><strong>Bonita Portal</strong>
+<ul>
+<li>корисничка веб апликација:
+<ul>
+<li>пријава на систем</li>
+<li>покретање процеса</li>
+<li>преглед и извршавање задатака (tasks)</li>
+<li>преглед инстанци процеса (тренутних и завршених)</li>
+</ul></li>
+<li>администраторска апликација:
+<ul>
+<li>управљање корисницима, групама, улогама, tenant-има</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="пројекат" class="slide level2">
+<h2>Пројекат</h2>
+<ul>
+<li>Задатак: развити <strong>process-driven</strong> апликацију која
+подржава пословни процес</li>
+<li>Садржи истраживачки дио</li>
+<li>Како се оцењује: <strong>50 поена</strong>
+<ul>
+<li>домаћи задатак: <strong>5 поена</strong></li>
+<li>3 контролне тачке током семестра: <strong>45 поена</strong>
+(отприлике 15 поена по контролној тачци)</li>
+</ul></li>
+</ul>
+</section>
+<section id="контролне-тачке-обавезни-део-пројекта"
+class="slide level2">
+<h2>Контролне тачке (обавезни део пројекта)</h2>
+<ul>
+<li><strong>1. контролна тачка</strong>
+<ul>
+<li>модел података</li>
+<li>моделовање организације</li>
+<li>имплементација једноставног процеса</li>
+</ul></li>
+<li><strong>2. контролна тачка</strong>
+<ul>
+<li>моделирање и имплементација неких делова пројекта</li>
+</ul></li>
+<li><strong>3. контролна тачка</strong>
+<ul>
+<li>моделирање и имплементација остатка пројекта</li>
+</ul></li>
+</ul>
+</section>
+<section id="шта-ћете-радити-у-пројекту" class="slide level2">
+<h2>Шта ћете радити у пројекту</h2>
+<ul>
+<li>Идентификација и моделирање:
+<ul>
+<li>улога у систему (организација)</li>
+<li>пословних података (Business Data Model)</li>
+<li>тока процеса у BPMN-у</li>
+</ul></li>
+<li>Имплементација:
+<ul>
+<li>додела задатака одговарајућим корисницима</li>
+<li>multi-instance таскови (нпр. више понуђача)</li>
+<li>аутоматизовани и кориснички таскови</li>
+<li>кориснички интерфејс у Бонити</li>
+<li>увид у статус задатака и процеса</li>
+</ul></li>
+</ul>
+</section>
+<section id="алтернативни-пројекат-newwave" class="slide level2">
+<h2>Алтернативни пројекат: NewWave</h2>
+<ul>
+<li>Уместо Bonita пројекта:
+<ul>
+<li>можете изабрати да проширите NewWave workflow engine</li>
+</ul></li>
+<li>Задатак:
+<ul>
+<li>имплементирати неке од елемената BPMN нотације</li>
+</ul></li>
+<li>NewWave:
+<ul>
+<li>отворени workflow engine развијан на ФТН-у</li>
+<li>https://github.com/skaplar/NewWave</li>
+</ul></li>
+<li>Потенцијал:
+<ul>
+<li>теме за мастер рад у договору са професором</li>
+</ul></li>
+</ul>
+</section>
+<section id="demo" class="slide level2">
+<h2>Demo</h2>
+</section>
+<section id="следећи-час" class="slide level2">
+<h2>Следећи час</h2>
+<ul>
+<li>Детаљније:
+<ul>
+<li>организација (корисници, групе, улоге)</li>
+<li>модел пословних података (BDM)</li>
+</ul></li>
+<li>Циљ:
+<ul>
+<li>да свако може да направи и деплојује мали процес</li>
+<li>припрема за домаћи задатак</li>
+</ul></li>
+</ul>
+<p>Питања?</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
