@@ -1,16 +1,7 @@
 ---
-title: "Управљање пословним процесима – Увод"
-lang: sr
-mainfont: "DejaVu Sans"
-monofont: "DejaVu Sans Mono"
-header-includes:
-  - \usepackage{fontspec}
-  - \usepackage{polyglossia}
-  - \setmainlanguage{serbian}
-  - \setotherlanguage{english}
-  - \setmainfont{DejaVu Sans}
-  - \setsansfont{DejaVu Sans}
-  - \setmonofont{DejaVu Sans Mono}
+title: "Увод"
+subtitle: "Управљање пословним процесима"
+lang: sr-Cyrl
 ---
 
 ## Увод у предмет

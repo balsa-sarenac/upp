@@ -7,13 +7,16 @@ Prezentacije se kompajliraju sa:
 pandoc class1.md -t revealjs -s -o class1.html -V slideNumber=true -V slideLevel=2 -c slides.css
 ```
 
-ili za pdf verziju:
+Za pdf verziju je potrebno da se instalira tema:
+```
+tlmgr install beamertheme-metropolis
+```
 
 ```
-pandoc class1.md -t beamer -o class1.pdf --pdf-engine=lualatex
+pandoc class1.md -t beamer -o class1.pdf --pdf-engine=xelatex -V theme:metropolis --include-in-header=header.tex
 ```
 
-(umjesto `lualatex` moze i `xelatex`)
+(umjesto `xelatex` moze i `lualatex`)
 
 ## Projekat
 

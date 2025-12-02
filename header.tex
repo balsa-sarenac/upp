@@ -1,0 +1,24 @@
+% header.tex — add to Pandoc via --include-in-header
+\usepackage{fontspec} % already loaded by Pandoc, but safe
+\setsansfont{DejaVu Sans}
+\setmainfont{DejaVu Serif}
+\setmonofont{DejaVu Sans Mono}
+
+% Define Cyrillic fonts explicitly for Polyglossia
+\newfontfamily\cyrillicfont{DejaVu Serif}
+\newfontfamily\cyrillicfontsf{DejaVu Sans}
+\newfontfamily\cyrillicfonttt{DejaVu Sans Mono}
+
+% Disable nav symbols that use missing stars
+%\setbeamertemplate{navigation symbols}{}
+
+% Add slide numbering in the footline: "3 / 15" style
+%\setbeamertemplate{footline}{%
+%  \leavevmode%
+%  \hbox{%
+%    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+%      \usebeamerfont{date in head/foot}%
+%      \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+%    \end{beamercolorbox}%
+%  }%
+%}
