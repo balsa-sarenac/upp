@@ -23,7 +23,7 @@ pandoc class1.md -t beamer -o class1.pdf --pdf-engine=xelatex -V theme:metropoli
 Projekat se kompajlira sa:
 
 ```
-pandoc projekat.md -o projekat.pdf --pdf-engine=lualatex
+pandoc projekat.md -o projekat.pdf --pdf-engine=xelatex --include-in-header=header.tex
 ```
 
 ## Troubleshooting
