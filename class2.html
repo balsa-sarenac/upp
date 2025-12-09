@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Органзација и модел података</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Органзација и модел података</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="подсетник-са-првог-часа" class="slide level2">
+<h2>Подсетник са првог часа</h2>
+<ul>
+<li>Процеси:
+<ul>
+<li>комплексни системи, више улога, више корака, рокови</li>
+</ul></li>
+<li>BPMN:
+<ul>
+<li>стандард за описивање процеса</li>
+<li>основа за извршавање у workflow енџину</li>
+</ul></li>
+<li>Bonita:
+<ul>
+<li>Studio – развојно окружење</li>
+<li>Platform (Engine + Portal) – извршење процеса</li>
+</ul></li>
+</ul>
+</section>
+<section id="развој-bpm-пројекта-у-бонити" class="slide level2">
+<h2>Развој BPM пројекта у Бонити</h2>
+<p>Развој BPM пројекта укључује:</p>
+<ul>
+<li>Дизајн:
+<ul>
+<li><strong>модела процеса</strong> (BPMN дијаграм)</li>
+<li><strong>пословних података</strong> потребних за процес</li>
+<li><strong>организације</strong> – ко обавља које активности</li>
+<li><strong>корисничког интерфејса</strong> (странице, форме)</li>
+</ul></li>
+<li>Интеграцију:
+<ul>
+<li>повезивање на постојеће системе/сервисе ако је потребно</li>
+</ul></li>
+<li>Deploy:
+<ul>
+<li>инсталација процеса на Bonita Platform (Portal)</li>
+</ul></li>
+</ul>
+</section>
+<section id="шта-је-процес-у-бонити" class="slide level2">
+<h2>Шта је „процес“ у Бонити?</h2>
+<ul>
+<li>Процес = след задатака (tasks) које:
+<ul>
+<li>обављају корисници (user tasks)</li>
+<li>или се извршавају аутоматски:
+<ul>
+<li>script tasks</li>
+<li>service tasks</li>
+<li>send/receive message tasks, итд.</li>
+</ul></li>
+</ul></li>
+<li>Процес има:
+<ul>
+<li>јасан почетак (start event)</li>
+<li>један или више завршетака (end event)</li>
+<li>по потреби тачке одлучивања (gateways)</li>
+</ul></li>
+</ul>
+</section>
+<section id="дефинисање-процеса-у-bonita-studio" class="slide level2">
+<h2>Дефинисање процеса у Bonita Studio</h2>
+<ul>
+<li>Логика извршавања апликације:
+<ul>
+<li>моделује се као BPMN дијаграм тока процеса</li>
+<li>Bonita Studio користи BPMN 2.0 (не све концепте)</li>
+</ul></li>
+<li>Видљиви делови за корисника:
+<ul>
+<li>UI Designer -&gt; странице и форме</li>
+</ul></li>
+<li>Deployment:
+<ul>
+<li>процеси дефинисани у Studio-у</li>
+<li><strong>инсталирају се</strong> на Bonita Platform / Portal</li>
+</ul></li>
+</ul>
+</section>
+<section id="организација-у-бонити-основни-појмови"
+class="slide level2">
+<h2>Организација у Бонити: основни појмови</h2>
+<ul>
+<li>Организација:
+<ul>
+<li>колекција корисника организованих у хијерархијско стабло</li>
+<li>обично одговара стварној организационој структури</li>
+</ul></li>
+<li>Корисници:
+<ul>
+<li>могу припадати различитим групама</li>
+</ul></li>
+<li>Улоге (roles):
+<ul>
+<li>за сваког корисника, у свакој групи можемо дефинисати улогу коју он
+има (нпр. employee, manager, buyer…)</li>
+</ul></li>
+</ul>
+</section>
+<section id="организациони-подаци" class="slide level2">
+<h2>Организациони подаци</h2>
+<ul>
+<li>Организација је битна за:
+<ul>
+<li>успешно извршавање процеса</li>
+<li>правилну доделу задатака</li>
+</ul></li>
+<li>Типично:
+<ul>
+<li>организација = хијерархијска структура тимова</li>
+</ul></li>
+<li>Ако у процесу учествују:
+<ul>
+<li>клијенти, добављачи, партнери…</li>
+<li>и они могу бити део организационе структуре</li>
+</ul></li>
+</ul>
+</section>
+<section id="где-се-чува-организација" class="slide level2">
+<h2>Где се чува организација?</h2>
+<ul>
+<li>Организациона структура:
+<ul>
+<li>чува се у бази података Bonita Engine-а</li>
+</ul></li>
+<li>Одржавање структуре:
+<ul>
+<li>кроз Bonita Studio (током развоја)</li>
+<li>и/или кроз Bonita Portal (у продукцији)</li>
+</ul></li>
+<li>У пракси:
+<ul>
+<li>често се организација повезује на спољашњи извор (нпр. LDAP)</li>
+<li>Bonita је не мора „поседовати“ унутар себе</li>
+</ul></li>
+</ul>
+</section>
+<section id="корисничке-улоге-actors-у-процесу" class="slide level2">
+<h2>Корисничке улоге (actors) у процесу</h2>
+<ul>
+<li><strong>Actor</strong>:
+<ul>
+<li>дефиниција „извршиоца“ одређеног дела процеса</li>
+<li>апстрактна улога у моделу процеса</li>
+</ul></li>
+<li>Касније се:
+<ul>
+<li>actor мапира на конкретне кориснике или групе</li>
+</ul></li>
+<li>Зашто?
+<ul>
+<li>да бисмо користили <strong>исту дефиницију процеса</strong> са
+различитим корисницима у различитим окружењима (develop, test,
+prod…)</li>
+</ul></li>
+</ul>
+</section>
+<section id="мапирање-actor-а-на-кориснике" class="slide level2">
+<h2>Мапирање actor-а на кориснике</h2>
+<ul>
+<li>Повезивање actor-а са стварним извршиоцима:
+<ul>
+<li>називамо <strong>мапирање улога</strong></li>
+</ul></li>
+<li>Пре deploy-а процеса:
+<ul>
+<li>потребно је да сви task-ови имају actor-е</li>
+<li>а actor-и да буду мапирани на кориснике/групе</li>
+</ul></li>
+<li>Мапирање можемо радити:
+<ul>
+<li>током моделовања (у Studio-у)</li>
+<li>или/и касније, кроз Portal (администратор)</li>
+</ul></li>
+</ul>
+</section>
+<section id="actors-и-swimlane-ови-у-процесу" class="slide level2">
+<h2>Actors и swimlane-ови у процесу</h2>
+<ul>
+<li>Actor се дефинише:
+<ul>
+<li>на нивоу <strong>pool-а</strong> (pool = процес, дијаграм може имати
+више pool-ова, тј. процеса)</li>
+</ul></li>
+<li>Користи се:
+<ul>
+<li>на нивоу стаза (swimlane-ова)</li>
+<li>или директно на task-овима</li>
+</ul></li>
+<li>Модел:
+<ul>
+<li>један actor -&gt; више task-ова / swimlane-ова које та улога
+извршава</li>
+</ul></li>
+<li>Пример:
+<ul>
+<li>actor „Buyer“ -&gt; сви задаци који припадају купцу</li>
+<li>actor „Supplier“ -&gt; задаци добављача</li>
+</ul></li>
+</ul>
+</section>
+<section id="извршавање-задатака-assignee-и-candidates"
+class="slide level2">
+<h2>Извршавање задатака: Assignee и Candidates</h2>
+<ul>
+<li><strong>Assignee</strong>:
+<ul>
+<li>корисник коме је задатак додељен (или га је сам преузео)</li>
+</ul></li>
+<li><strong>Candidates</strong>:
+<ul>
+<li>корисник или група корисника којима је задатак „понудјен“</li>
+<li>сваки од њих може да га преузме (claim)</li>
+</ul></li>
+<li>Дефинисање кандидата врши се кроз:
+<ul>
+<li>Actors</li>
+<li>Actor filters</li>
+</ul></li>
+</ul>
+</section>
+<section id="actor-filters" class="slide level2">
+<h2>Actor filters</h2>
+<ul>
+<li>Actor filters:
+<ul>
+<li>користе се да се из постојећих група сузи избор кандидата</li>
+<li>нпр. само они који:
+<ul>
+<li>припадају одређеној групи</li>
+<li>имају неки атрибут (нпр. регион, seniority…)</li>
+</ul></li>
+</ul></li>
+<li>Резултат филтера:
+<ul>
+<li>мањи скуп кандидата за одређени task</li>
+</ul></li>
+</ul>
+</section>
+<section id="преглед-организација-actors-у-пракси" class="slide level2">
+<h2>Преглед: Организација &amp; Actors у пракси</h2>
+<p>За сваки процес:</p>
+<ol type="1">
+<li>Дефинишемо <strong>actors</strong>:
+<ul>
+<li>нпр. „Buyer“, „Supplier“, „Approver“</li>
+</ul></li>
+<li>Мапирамо actors на:
+<ul>
+<li>кориснике, групе, улоге у организационој структури</li>
+</ul></li>
+<li>По потреби користимо <strong>actor filters</strong>:
+<ul>
+<li>да ограничимо кандидате по додатним правилима</li>
+</ul></li>
+<li>Током извршавања:
+<ul>
+<li>Bonita Engine користи ове дефиниције</li>
+<li>да би знао коме да додели који task</li>
+</ul></li>
+</ol>
+</section>
+<section id="пословни-подаци-зашто-су-важни" class="slide level2">
+<h2>Пословни подаци: зашто су важни?</h2>
+<ul>
+<li>Свака пословна апликација:
+<ul>
+<li>постоји да би помогла извршавање неког пословног циља</li>
+</ul></li>
+<li>Пословни подаци:
+<ul>
+<li>представљају домен који је неопходан да се обави та активност</li>
+<li>nпр. „Auction“, „Bid“, „User“, „Order“…<br />
+</li>
+</ul></li>
+<li>Основни модел података у Бонити:
+<ul>
+<li><strong>Business Data Model (BDM)</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="пословни-подаци-и-процес" class="slide level2">
+<h2>Пословни подаци и процес</h2>
+<ul>
+<li>Подаци који се обрађују током процеса:
+<ul>
+<li>треба да буду видљиви:
+<ul>
+<li><strong>унутар самог процеса</strong></li>
+<li>и ван њега (нпр. за извештавање, претрагу, друге апликације)</li>
+</ul></li>
+</ul></li>
+<li>BDM:
+<ul>
+<li>омогућава да дефинишемо пословне ентитете</li>
+<li>Bonita аутоматски генерише:
+<ul>
+<li>Java класе</li>
+<li>табеле за перзистенцију</li>
+<li>основне упите</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="где-се-чувају-пословни-подаци" class="slide level2">
+<h2>Где се чувају пословни подаци?</h2>
+<p>Bonita подржава два приступа:</p>
+<ol type="1">
+<li>BDM у локалној бази коју контролише Bonita Portal
+<ul>
+<li>„Bonita Business Data database“</li>
+</ul></li>
+<li>Спољни извор података:
+<ul>
+<li>ако већ постоји пословна база</li>
+<li>Bonita јој приступа као екстерном извору</li>
+<li>избегава се дуплирање модела</li>
+</ul></li>
+</ol>
+</section>
+<section id="процесне-варијабле-vs.-пословни-подаци"
+class="slide level2">
+<h2>Процесне варијабле vs. пословни подаци</h2>
+<ul>
+<li>Процесне варијабле:
+<ul>
+<li>подаци који су релевантни за појединачну инстанцу процеса</li>
+<li>чувају се локално у контексту процеса</li>
+<li>не морају бити део BDM-а</li>
+</ul></li>
+<li>Пословни подаци (BDM):
+<ul>
+<li>део доменског модела</li>
+<li>чувају се у пословној бази</li>
+<li>користе се и ван конкретне инстанце процеса</li>
+</ul></li>
+</ul>
+</section>
+<section id="добро-моделовање-пословних-података" class="slide level2">
+<h2>Добро моделовање пословних података</h2>
+<ul>
+<li>Кључно за успех имплементације процеса</li>
+<li>Ако је BDM лош:
+<ul>
+<li>теже је направити јасан процес</li>
+<li>UI, извештаји и интеграције су компликованији</li>
+</ul></li>
+<li>Препоруке (висок ниво):
+<ul>
+<li>посматрати BDM као „доменски модел“</li>
+<li>не пренатрпавати ентитете</li>
+<li>одвојити техничке/процесне флагове од чисто пословних података</li>
+</ul></li>
+</ul>
+</section>
+<section id="bdm-у-bonita-studio" class="slide level2">
+<h2>BDM у Bonita Studio</h2>
+<ul>
+<li>Уграђени алат за моделовање пословних података:
+<ul>
+<li>додавање ентитета (нпр. <code>Auction</code>, <code>Bid</code>,
+<code>Supplier</code>)</li>
+<li>дефинисање атрибута и типова</li>
+</ul></li>
+<li>Bonita од тога креира:
+<ul>
+<li>Java класе</li>
+<li>табеле у бази</li>
+<li>основне query-је</li>
+</ul></li>
+<li>Могуће је додати прилагођене query-је по потреби</li>
+</ul>
+</section>
+<section id="повезивање-процес-организација-подаци"
+class="slide level2">
+<h2>Повезивање: процес, организација, подаци</h2>
+<p>За сваки BPM пројекат у Бонити:</p>
+<ol type="1">
+<li>Модел процеса (BPMN):
+<ul>
+<li>које активности, којим редоследом, који догађаји</li>
+</ul></li>
+<li>Организација / actors:
+<ul>
+<li>ко извршава које активности</li>
+</ul></li>
+<li>BDM:
+<ul>
+<li>које податке процес користи и мења</li>
+</ul></li>
+<li>UI:
+<ul>
+<li>како корисник уноси/види те податке</li>
+</ul></li>
+</ol>
+<p>Све четири ствари морају бити конзистентне.</p>
+</section>
+<section id="домаћи-задатак-5-поена" class="slide level2">
+<h2>Домаћи задатак (5 поена)</h2>
+<ul>
+<li>На основу описа пројекта, припремити:
+<ul>
+<li>структуру организације</li>
+<li>иницијални предлог ентитета и атрибута</li>
+<li>унети у Bonita Studio као организацију и BDM</li>
+</ul></li>
+</ul>
+</section>
+<section id="следећи-час" class="slide level2">
+<h2>Следећи час</h2>
+<ul>
+<li>Фокус:
+<ul>
+<li>почетно моделовање процеса у BPMN-у у Бонити</li>
+<li>основни елементи (start/end, tasks, gateways, subprocess-и)</li>
+</ul></li>
+<li>Циљ:
+<ul>
+<li>да можете да направите и пустите у рад мали, али комплетан
+процес</li>
+</ul></li>
+</ul>
+<p>Питања?</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
