@@ -18,7 +18,7 @@ pandoc class1.md -t beamer -o class1.pdf --pdf-engine=xelatex -V theme:metropoli
 
 (umjesto `xelatex` moze i `lualatex`)
 
-## Projekat
+## Projeka
 
 Projekat se kompajlira sa:
 
