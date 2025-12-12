@@ -1,0 +1,20 @@
+# Standard latex ignores
+*.aux
+*.log
+*.gz
+*.toc
+*.lof
+*.lot
+*.out
+*.blg
+*.bbl
+*.dvi
+*.synctex.gz
+
+# vim ignores
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+opencodetmp/
