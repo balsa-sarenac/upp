@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Модел процеса у Бонити – основни BPMN елементи</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Модел процеса у Бонити – основни BPMN елементи</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="модел-процеса-у-бонити-основни-bpmn-елементи"
+class="slide level2">
+<h2>Модел процеса у Бонити – основни BPMN елементи</h2>
+<ul>
+<li>Подсетник: шта већ имамо (организација, BDM)</li>
+<li>Основни BPMN елементи у Бонити</li>
+<li>Како изгледа „минималан“ процес</li>
+<li>Повезивање task-ова са actors и подацима</li>
+<li>Први „озбиљнији“ пример процеса</li>
+</ul>
+</section>
+<section id="где-смо-сада" class="slide level2">
+<h2>Где смо сада</h2>
+<p>До сада смо:</p>
+<ul>
+<li>разумели зашто су процеси и BPMN битни</li>
+<li>упознали Bonita платформу:
+<ul>
+<li>Studio, Engine, Portal</li>
+</ul></li>
+<li>упознали:
+<ul>
+<li>организацију (users, groups, roles, actors, actor filters)</li>
+<li>пословне податке (Business Data Model, BDM)</li>
+</ul></li>
+</ul>
+<p>Данас:</p>
+<ul>
+<li>фокус на <strong>модел процеса</strong> у Bonita Studio-у (BPMN
+дијаграм и најважнији елементи)</li>
+</ul>
+</section>
+<section id="подсетник-шта-чини-bpm-пројекат-у-бонити"
+class="slide level2">
+<h2>Подсетник: шта чини BPM пројекат у Бонити</h2>
+<p>Развој BPM пројекта укључује:</p>
+<ul>
+<li>Модел процеса (BPMN)</li>
+<li>Организацију / actors (ко ради шта)</li>
+<li>Модел пословних података (BDM)</li>
+<li>Кориснички интерфејс (UI Designer)</li>
+<li>Интеграције (конектори, скрипте…)</li>
+</ul>
+<p>Данас се фокусирамо на <strong>BPMN дијаграм</strong> и како он
+изгледа у практичном пројекту.</p>
+</section>
+<section id="bpmn-у-bonita-studio" class="slide level2">
+<h2>BPMN у Bonita Studio</h2>
+<ul>
+<li>Bonita Studio користи BPMN 2.0 нотацију:
+<ul>
+<li>али не имплементира баш све концепте стандарда</li>
+</ul></li>
+<li>Најважнији елементи за нас (за сада):
+<ul>
+<li>Start / End events</li>
+<li>Tasks (User, Service, Script…)</li>
+<li>Gateways (XOR, AND)</li>
+<li>Subprocess-и</li>
+<li>Pools и swimlane-ови</li>
+</ul></li>
+</ul>
+<p>Није циљ да знамо све елементе, већ да знамо да моделирамо
+<strong>јасне, извршиве процесе</strong>.</p>
+</section>
+<section id="процес-као-след-задатака" class="slide level2">
+<h2>Процес као „след задатака“</h2>
+<ul>
+<li>Процес = след задатака (tasks) које:
+<ul>
+<li>обављају људи (user tasks)</li>
+<li>или се извршавају аутоматски (script/service tasks…)</li>
+</ul></li>
+<li>Има:
+<ul>
+<li>почетак (start event)</li>
+<li>крај (end event)</li>
+<li>одлуке (gateways) по потреби</li>
+</ul></li>
+</ul>
+<p>У Bonita Studio-у: - ово све цртамо на process editor
+„whiteboard“-у.</p>
+</section>
+<section id="pools-и-swimlane-ови" class="slide level2">
+<h2>Pools и Swimlane-ови</h2>
+<ul>
+<li><strong>Pool</strong>:
+<ul>
+<li>цео процес (једна организациона целина или систем)</li>
+<li>у Бонити – један pool = један процес</li>
+</ul></li>
+<li><strong>Swimlane</strong>:
+<ul>
+<li>„трака“ за једну улогу или actor-а</li>
+<li>task-ови у истој стази делe истог actor-а</li>
+</ul></li>
+</ul>
+<p>Практично:</p>
+<ul>
+<li>сваки pool има свој сет actors</li>
+<li>swimlane нам помаже да визуелно групишемо task-ове по улогама.</li>
+</ul>
+</section>
+<section id="основни-bpmn-елементи-1-догађаји-events"
+class="slide level2">
+<h2>Основни BPMN елементи – 1: догађаји (events)</h2>
+<ul>
+<li><strong>Start event</strong>:
+<ul>
+<li>место где инстанца процеса почиње</li>
+<li>у Бонити – обично један start event по процесу</li>
+</ul></li>
+<li><strong>End event</strong>:
+<ul>
+<li>место где инстанца процеса завршава</li>
+<li>може их бити више (различити исходи)</li>
+</ul></li>
+</ul>
+</section>
+<section id="основни-bpmn-елементи-2-задаци-tasks" class="slide level2">
+<h2>Основни BPMN елементи – 2: задаци (tasks)</h2>
+<ul>
+<li><strong>User task</strong>:
+<ul>
+<li>извршава људски корисник кроз портал или UI страницу</li>
+<li>мора бити повезан са actor-ом</li>
+</ul></li>
+<li><strong>Service task</strong>:
+<ul>
+<li>позива неки конектор или сервис (REST, база…)</li>
+<li>често аутоматизује део посла</li>
+</ul></li>
+<li><strong>Script task</strong>:
+<ul>
+<li>извршава скрипт (нпр. Groovy) унутар Bonita енџина</li>
+<li>обрада података, прорачуни</li>
+</ul></li>
+<li><strong>Send/Receive task</strong>
+<ul>
+<li>за специфичније ситуације (колаборација)</li>
+</ul></li>
+</ul>
+</section>
+<section id="основни-bpmn-елементи-3-gateway-и" class="slide level2">
+<h2>Основни BPMN елементи – 3: gateway-и</h2>
+<ul>
+<li><strong>Exclusive (XOR) gateway</strong>:
+<ul>
+<li>„или-или“ – само један излазни ток се прати</li>
+<li>одлука на основу неког услова</li>
+</ul></li>
+<li><strong>Parallel (AND) gateway</strong>:
+<ul>
+<li>„и-и“ – сви излазни токови се активирају</li>
+<li>или се чека да више грана стигне</li>
+</ul></li>
+<li><strong>Inclusive (OR) gateway</strong>:
+<ul>
+<li>један или више токова, паралелно активирани</li>
+</ul></li>
+</ul>
+</section>
+<section id="основни-bpmn-елементи-4-subprocess-и" class="slide level2">
+<h2>Основни BPMN елементи – 4: subprocess-и</h2>
+<ul>
+<li><strong>Embedded subprocess</strong>:
+<ul>
+<li>„група“ task-ова унутар истог процеса</li>
+<li>користи се ради прегледности, као логички блок</li>
+</ul></li>
+<li><strong>Call activity</strong> (позив другог процеса):
+<ul>
+<li>омогућава да се један процес позове из другог</li>
+<li>поновна искоришћеност „компоненте“ процеса</li>
+</ul></li>
+</ul>
+</section>
+<section id="извршавање-задатака-assignee-и-candidates"
+class="slide level2">
+<h2>Извршавање задатака: Assignee и Candidates</h2>
+<ul>
+<li><strong>Assignee</strong>:
+<ul>
+<li>корисник коме је задатак додељен (или га је сам преузео)</li>
+</ul></li>
+<li><strong>Candidates</strong>:
+<ul>
+<li>корисник или група корисника којима је задатак „понудјен“</li>
+<li>сваки од њих може да га преузме (claim)</li>
+</ul></li>
+<li>Дефинисање кандидата врши се кроз:
+<ul>
+<li>Actors</li>
+<li>Actor filters</li>
+</ul></li>
+</ul>
+</section>
+<section id="повезивање-task-а-са-actor-ом" class="slide level2">
+<h2>Повезивање task-а са actor-ом</h2>
+<ul>
+<li>Сваком <strong>user task-у</strong> мора бити додељен:
+<ul>
+<li>actor (или swimlane са actor-ом)</li>
+</ul></li>
+<li>Кораци:
+<ul>
+<li>дефинисати actor на нивоу pool-а</li>
+<li>на task-у:
+<ul>
+<li>изабрати actor</li>
+<li>или користити swimlane који већ има actor</li>
+</ul></li>
+</ul></li>
+<li>Без actor-а:
+<ul>
+<li>task не може бити правилно додељен</li>
+<li><h2 id="процес-deployment-ће-пријавити-грешку-упозорење">процес
+deployment ће пријавити грешку / упозорење</h2></li>
+</ul></li>
+</ul>
+</section>
+<section id="минималан-процес-у-бонити" class="slide level2">
+<h2>Минималан процес у Бонити</h2>
+<p>Најједноставнији извршив процес:</p>
+<ul>
+<li>Start even</li>
+<li>User task (са додељеним actor-ом и формом)</li>
+<li>End even</li>
+</ul>
+<p>У Studio-у:</p>
+<ol type="1">
+<li>Нов процес (pool)</li>
+<li>Додај start и end even</li>
+<li>Између њих user task</li>
+<li>Дефиниши actor и мапирај га на корисника</li>
+<li>Додај једноставну форму (UI Designer)</li>
+<li>Run -&gt; тестирај у Portal-у</li>
+</ol>
+</section>
+<section id="повезивање-процеса-са-bdm-ом" class="slide level2">
+<h2>Повезивање процеса са BDM-ом</h2>
+<p>Типичан ток:</p>
+<ol type="1">
+<li>У BDM-у дефинишемо ентитете (нпр. <code>Request</code>,
+<code>Auction</code>, <code>Bid</code>)</li>
+<li>У процесу:
+<ul>
+<li>дефинишемо <strong>business data</strong> повезану са тим
+ентитетом</li>
+</ul></li>
+<li>У task-у:
+<ul>
+<li>форма приказује и ажурира ове податке</li>
+<li>script/service task може да чита/мења BDM објекте</li>
+</ul></li>
+</ol>
+<p>Пример:</p>
+<ul>
+<li>Process business data: <code>auction</code> (тип
+<code>Auction</code>)</li>
+<li>User task форма за креирање/измену <code>auction</code>
+података.</li>
+</ul>
+</section>
+<section id="препоруке-за-bpmn-модел" class="slide level2">
+<h2>Препоруке за BPMN модел</h2>
+<p>Неке практичне препоруке:</p>
+<ul>
+<li>Сваком процесу:
+<ul>
+<li>јасан назив („Handle supplier bids“, не „Process1“)</li>
+</ul></li>
+<li>Task-ови:
+<ul>
+<li>називати глаголом + објекат („Submit bid“, „Approve request“)</li>
+<li>могу бити и више дескриптивни називи ако има потребе за тим</li>
+</ul></li>
+<li>Не гурати баш све у један дијаграм:
+<ul>
+<li>користити subprocess-е за логичке целине</li>
+</ul></li>
+<li>Држати дијаграм читљивим:
+<ul>
+<li>избегавати укрштање стрелица где је могуће</li>
+<li>користити annotations за објашњења, ако треба</li>
+</ul></li>
+</ul>
+</section>
+<section id="типичне-грешке-почетника" class="slide level2">
+<h2>Типичне грешке почетника</h2>
+<p>Неке „BPMN грешке“ које ћемо избегавати:</p>
+<ul>
+<li>Task без actor-а → нико га не може извршити</li>
+<li>Недостаје end event → процес никад формално не заврши</li>
+<li>Више излазних стрелица из task-а без gateway-а</li>
+<li>„Вешање“ елемената без везе (sequence flow)</li>
+<li>Све радити у једном огромном процесу уместо користити
+subprocess-е</li>
+</ul>
+<p>Касније ћемо говорити и о deadlock-овима, unreachable task-овима
+итд.</p>
+</section>
+<section id="домаћи-задатак" class="slide level2">
+<h2>Домаћи задатак</h2>
+<p>За пројекат:</p>
+<ol type="1">
+<li>Направити иницијални BPMN модел:
+<ul>
+<li>main процес који почиње процес кодификације</li>
+<li>бар 3 task-а</li>
+<li>бар један XOR gateway</li>
+</ul></li>
+</ol>
+<p>Циљ:</p>
+<ul>
+<li>да сви имате прву верзију процеса коју ћемо касније
+проширивати.</li>
+</ul>
+</section>
+<section id="следећи-час" class="slide level2">
+<h2>Следећи час</h2>
+<ul>
+<li>Напреднији елементи:
+<ul>
+<li>избегавање deadlock-ова</li>
+<li>колаборација више процеса</li>
+<li>догађаји (timer, error…)</li>
+<li>call activity (позив другог процеса)</li>
+</ul></li>
+<li>Бићемо спремни да:
+<ul>
+<li>ваш иницијални модел претворимо у робуснији процес,</li>
+<li>решавамо типичне грешке и BPMN лоше шаблоне.</li>
+</ul></li>
+</ul>
+<p>Питања?</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
