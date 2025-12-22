@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Колаборација, догађаји и типичне грешке</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Колаборација, догађаји и типичне грешке</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="колаборација-догађаји-call-activity-и-типичне-грешке"
+class="slide level2">
+<h2>Колаборација, догађаји, call activity и типичне грешке</h2>
+<ul>
+<li>Подсетник: основни BPMN елементи</li>
+<li>Deadlock-ови и типичне грешке у моделу</li>
+<li>Колаборација између процеса</li>
+<li>Догађаји (events) у пракси</li>
+<li>Call activity – позив других процеса</li>
+</ul>
+</section>
+<section id="подсетник-са-претходног-часа" class="slide level2">
+<h2>Подсетник са претходног часа</h2>
+<p>Већ смо видели:</p>
+<ul>
+<li>Основне BPMN елементе у Бонити:
+<ul>
+<li>Start / End events</li>
+<li>User / Service / Script tasks</li>
+<li>XOR и AND gateways</li>
+<li>Pools и swimlane-ови</li>
+</ul></li>
+<li>Минималан процес:
+<ul>
+<li>Start → (User task) → (Script/Service) → End</li>
+<li>повезан са actors и BDM-ом</li>
+</ul></li>
+</ul>
+<p>Данас идемо даље ка <strong>реалнијим и робуснијим
+процесима</strong>.</p>
+</section>
+<section id="зашто-причамо-о-грешкама-и-deadlock-овима"
+class="slide level2">
+<h2>Зашто причамо о грешкама и deadlock-овима?</h2>
+<ul>
+<li>Реални процеси су:
+<ul>
+<li>дужи,</li>
+<li>имају више грана,</li>
+<li>имају више учесника</li>
+</ul></li>
+<li>Без пажње:
+<ul>
+<li>лако се направи „замка“:
+<ul>
+<li>процес чека нешто што никад не стигне</li>
+<li>нека грана никад не може да се догоди</li>
+</ul></li>
+</ul></li>
+<li>Циљ:
+<ul>
+<li>да препознате и избегнете најчешће BPMN „грешке“ (smells)</li>
+</ul></li>
+</ul>
+</section>
+<section id="deadlock-шта-је-то-у-контексту-bpmn" class="slide level2">
+<h2>Deadlock – шта је то у контексту BPMN?</h2>
+<ul>
+<li>Познат из конкуретног програмирања:
+<ul>
+<li>два или више процеса чекају један другог → нико не напредује</li>
+</ul></li>
+<li>У BPMN-у:
+<ul>
+<li>комбинација gateway-а, догађаја и токова</li>
+<li>доводи до тога да инстанца процеса „заглави“ и никад не дође до end
+event-а</li>
+</ul></li>
+<li>У Бонити:
+<ul>
+<li>видећете инстанцу која је „у току“, али јој се ништа не дешава</li>
+</ul></li>
+</ul>
+</section>
+<section id="типичан-извор-deadlock-а-погрешан-and-gateway"
+class="slide level2">
+<h2>Типичан извор deadlock-а: погрешан AND gateway</h2>
+<p>Пример:</p>
+<ol type="1">
+<li>AND split – процес се грана на две паралелне гране</li>
+<li>На једној грани се налази услов који није увек задовољен</li>
+<li>AND join – чека да обе гране стигну</li>
+<li>Ако једна грана никад не стигне → процес заглави</li>
+</ol>
+<p>Лекција:</p>
+<ul>
+<li>AND join мора бити сигуран да ће све гране увек моћи да стигну</li>
+<li>Ако не, можда треба XOR/Inclusive gateway или друга структура.</li>
+</ul>
+</section>
+<section id="типична-грешка-погрешно-коришћење-gateway-а"
+class="slide level2">
+<h2>Типична грешка: погрешно коришћење gateway-а</h2>
+<ul>
+<li>Gateway није „украшени чвор“:
+<ul>
+<li>сваки излазни ток мора имати јасну логику</li>
+</ul></li>
+<li>Лоши обрасци:
+<ul>
+<li>више излазних стрелица из task-а без gateway-а</li>
+<li>XOR gateway са гранама које немају услов/подразумевани ток</li>
+<li>Parallel gateway где једна грана заправо није паралелна, већ
+условна</li>
+</ul></li>
+</ul>
+<p>Препорука:</p>
+<ul>
+<li>за сваку одлуку:
+<ul>
+<li>најчешће XOR gateway</li>
+<li>јасно наведени услови или default грана</li>
+</ul></li>
+</ul>
+</section>
+<section id="типична-грешка-unreachable-task-ови" class="slide level2">
+<h2>Типична грешка: unreachable task-ови</h2>
+<ul>
+<li>Task који:
+<ul>
+<li>нема <strong>ниједан</strong> улазни ток</li>
+<li>или се налази у грани до које никад не води важећи услов</li>
+</ul></li>
+<li>Последица:
+<ul>
+<li>тај део процеса се никада не извршава</li>
+</ul></li>
+<li>Како препознати:
+<ul>
+<li>визуелни преглед дијаграма</li>
+<li>гледање у Portal-у: да ли се тај task икад појави?</li>
+</ul></li>
+</ul>
+</section>
+<section id="типична-грешка-процес-без-јасног-краја"
+class="slide level2">
+<h2>Типична грешка: процес без јасног краја</h2>
+<ul>
+<li>Нема end event-а:
+<ul>
+<li>инстанца формално никад не заврши</li>
+<li>тешко је мерити трајање и „успешан завршетак“</li>
+</ul></li>
+<li>Превише end event-ова без јасног значења:
+<ul>
+<li>„End1“, „End2“, „End3“ без описног назива</li>
+</ul></li>
+<li>Препоруке:
+<ul>
+<li>сваки процес мора имати бар један end even</li>
+<li>ако има више:
+<ul>
+<li>јасно их именовати (нпр. „Approved“, „Rejected“, „Cancelled“)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="колаборација-процеса-зашто-нам-треба" class="slide level2">
+<h2>Колаборација процеса: зашто нам треба?</h2>
+<p>У реалним системима:</p>
+<ul>
+<li>Не решавамо све једним огромним процесом</li>
+<li>Имамо:
+<ul>
+<li>више процеса који сарађују</li>
+<li>део логике који желимо да поново искористимо</li>
+<li>различите „учеснике“ (организације, системи)</li>
+</ul></li>
+</ul>
+<p>Примери:</p>
+<ul>
+<li>Процес „Отвори аукцију“ позива процес „Прикупљање понуда“</li>
+<li>Процес „Обрада рекламације“ позива процес „Рефундација новца“</li>
+</ul>
+</section>
+<section id="начини-колаборације-bpmn-perspective" class="slide level2">
+<h2>Начини колаборације (BPMN perspective)</h2>
+<p>У BPMN-у:</p>
+<ul>
+<li>Више <strong>pool-ова</strong>:
+<ul>
+<li>сваки представља посебан процес / систем / организацију</li>
+</ul></li>
+<li>Комуникација:
+<ul>
+<li>преко <strong>message flow</strong> стрелица</li>
+</ul></li>
+<li>У Бонити:
+<ul>
+<li>најчешће користимо:
+<ul>
+<li><strong>call activity</strong> (један процес позива други)</li>
+<li>или message/signal event-е (напредније, наредни час)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Данас: фокус на <strong>call activity</strong>.</p>
+</section>
+<section id="call-activity-идеја" class="slide level2">
+<h2>Call Activity: идеја</h2>
+<ul>
+<li>Call activity:
+<ul>
+<li>task у процесу који позива други процес (sub-process)</li>
+</ul></li>
+<li>Користи се за:
+<ul>
+<li>поновну употребу истог процеса на више места</li>
+<li>одвајање сложенијег дела у посебан процес</li>
+</ul></li>
+<li>Позвани процес:
+<ul>
+<li>може имати своје start/end, своје actor-е и BDM</li>
+</ul></li>
+</ul>
+</section>
+<section id="call-activity-у-бонити-основни-кораци"
+class="slide level2">
+<h2>Call Activity у Бонити (основни кораци)</h2>
+<p>У Bonita Studio-у:</p>
+<ol type="1">
+<li>Креирати суб-процес (pool)</li>
+<li>У главном процесу:
+<ul>
+<li>додати call activity у дијаграм</li>
+</ul></li>
+<li>У својствима call activity:
+<ul>
+<li>изабрати који процес се позива</li>
+<li>подесити мапирање података (input/output)</li>
+</ul></li>
+<li>Deployment:
+<ul>
+<li>водити рачуна да су оба процеса deploy-овани</li>
+</ul></li>
+</ol>
+</section>
+<section id="догађаји-events-шира-слика" class="slide level2">
+<h2>Догађаји (events) – шира слика</h2>
+<p>До сада:</p>
+<ul>
+<li>Start / End events</li>
+</ul>
+<p>Следећи корак:</p>
+<ul>
+<li><strong>Intermediate events</strong>:
+<ul>
+<li>нешто се дешава у току процеса</li>
+</ul></li>
+<li><strong>Boundary events</strong>:
+<ul>
+<li>„качe“ се на task/subprocess</li>
+<li>реагују ако се деси одређени догађај (нпр. грешка, timeout)</li>
+</ul></li>
+</ul>
+<p>Типови које ћемо видети:</p>
+<ul>
+<li>Timer even</li>
+<li>Error even</li>
+</ul>
+</section>
+<section id="timer-events-тајмери" class="slide level2">
+<h2>Timer events (тајмери)</h2>
+<ul>
+<li>Када су корисни:
+<ul>
+<li>дефинисање рокова</li>
+<li>подсетници</li>
+<li>ескалације (нпр. ако нико не обради захтев X дана)</li>
+</ul></li>
+<li>Два типична начина употребе:
+<ol type="1">
+<li><strong>Intermediate catching timer event</strong>:
+<ul>
+<li>процес чека одређено време пре наставка</li>
+</ul></li>
+<li><strong>Boundary timer event</strong>:
+<ul>
+<li>постављен на user task</li>
+<li>ако рок истекне, активира ескалација/алтернативни ток</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="пример-boundary-timer-на-user-task-у" class="slide level2">
+<h2>Пример: boundary timer на user task-у</h2>
+<p>Scenario:</p>
+<ul>
+<li>User task: „Approve auction“
+<ul>
+<li>Assigned to manager</li>
+</ul></li>
+<li>Boundary timer event:
+<ul>
+<li>ако менаџер не реагује за 3 дана:
+<ul>
+<li>процес иде у алтернативни ток:
+<ul>
+<li>подсетник,</li>
+<li>промена assignee-а,</li>
+<li>аутоматско одбијање/одобравање, итд.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>BPMN:</p>
+<ul>
+<li>User task са малим clock иконицом „прикаченом“ са стране.</li>
+</ul>
+</section>
+<section id="error-events-грешке" class="slide level2">
+<h2>Error events (грешке)</h2>
+<ul>
+<li>Када користимо:
+<ul>
+<li>када желимо да ухватимо грешке током:
+<ul>
+<li>извршења конектора,</li>
+<li>сервисних/скрипт task-ова,</li>
+<li>позваних процеса</li>
+</ul></li>
+</ul></li>
+<li><strong>Boundary error event</strong>:
+<ul>
+<li>прикачен на task/subprocess</li>
+<li>ако се деси грешка -&gt; прекида task</li>
+<li>ток иде у алтернативну грану (errror handling)</li>
+</ul></li>
+</ul>
+<p>Пример:</p>
+<ul>
+<li>Service task „Call payment service“ + boundary error even → ако
+сервис врати грешку, идемо у ручну обраду.</li>
+</ul>
+</section>
+<section id="типичне-грешке-са-догађајима" class="slide level2">
+<h2>Типичне грешке са догађајима</h2>
+<ul>
+<li>Заборављени boundary event:
+<ul>
+<li>дода се на task, али се не повеже даље</li>
+</ul></li>
+<li>Без јасне логике после догађаја:
+<ul>
+<li>нпр. timer активира ток који никуд не води</li>
+</ul></li>
+</ul>
+<p>Препорука:</p>
+<ul>
+<li>користити догађаје тамо где постоји јасна пословна потреба</li>
+<li>проверити:
+<ul>
+<li>има ли смислен крај после тог догађаја?</li>
+<li>да ли можемо да објаснимо „шта се дешава када“ у 2–3 реченице?</li>
+</ul></li>
+</ul>
+</section>
+<section id="примењено-на-пројекат" class="slide level2">
+<h2>Примењено на пројекат</h2>
+<p>Где можете да употребите:</p>
+<ul>
+<li><strong>Call activity</strong>:
+<ul>
+<li>main процес -&gt; sub-процес за одређену фазу</li>
+<li>main процес -&gt; sub-процес за секвенцу која се понавља на више
+места</li>
+</ul></li>
+<li><strong>Timer events</strong>:
+<ul>
+<li>временски рок за кодификацију</li>
+<li>временски рок за одговоре владе</li>
+</ul></li>
+<li><strong>Error events</strong>:
+<ul>
+<li>грешка при слању мејла</li>
+<li>грешка у позиву спољног сервиса (ако га имате)</li>
+</ul></li>
+</ul>
+</section>
+<section id="мини-провера-за-bpmn-квалитет" class="slide level2">
+<h2>Мини провера за BPMN квалитет</h2>
+<p>Пре него што предате модел:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Да ли процес има бар један јасно
+именован end event?</label></li>
+<li><label><input type="checkbox" />Да ли сваки user task има
+actor-а?</label></li>
+<li><label><input type="checkbox" />Да ли сваки gateway има смислене
+услове и/или default гране?</label></li>
+<li><label><input type="checkbox" />Да ли постоји бар једна путања од
+start до end event-а без заглављивања?</label></li>
+<li><label><input type="checkbox" />Да ли постоји бар један
+пример:</label>
+<ul>
+<li>догађаја (timer/error) или</li>
+<li>call activity, ако је потребно?</li>
+</ul></li>
+</ul>
+</section>
+<section id="следећи-час" class="slide level2">
+<h2>Следећи час</h2>
+<ul>
+<li>Колаборација процеса у Бонити</li>
+<li>Multi-instance task-ови (нпр. више добављача / више понуда)</li>
+<li>Рад са документима</li>
+<li>Динамички избор извршиоца (динамична додела посла)</li>
+<li>Још практичних примера везаних за пројекат</li>
+</ul>
+<p>Питања?</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
