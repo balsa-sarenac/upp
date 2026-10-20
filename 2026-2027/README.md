@@ -28,26 +28,3 @@ objavljena uz kriterijume provjera.
 [Uvodna prezentacija i prva vježba](vjezbe/class1.md) predstavljaju plan rada.
 Izbor verzije i nastavnog okruženja za Camunda platformu, kao i uputstvo
 za pristup, biće objavljeni prije dijela o izvršavanju procesa.
-
-## Prezentacije
-Komande se pokreću iz direktorijuma `vjezbe`. Prezentacije se kompajliraju sa:
-
-```
-pandoc class1.md -t revealjs -s -o class1.html -V slideNumber=true -V slideLevel=2 -c slides.css
-```
-
-Za pdf verziju je potrebno da se instalira tema:
-```
-tlmgr install beamertheme-metropolis
-```
-
-```
-pandoc class1.md -t beamer -o class1.pdf --pdf-engine=xelatex -V theme:metropolis --include-in-header=header.tex
-```
-
-(umjesto `xelatex` moze i `lualatex`)
-
-## Troubleshooting
-
-Za pdf verzija potreban je font koji podržava ćirilicu.
-Trenutno se koristi font [DejaVu Sans](https://dejavu-fonts.github.io/).

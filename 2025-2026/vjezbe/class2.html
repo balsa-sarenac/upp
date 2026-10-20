@@ -16,10 +16,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -30,10 +33,9 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
-  <link rel="stylesheet" href="slides.css"/>
+  <link rel="stylesheet" href="../../common/slides.css"/>
 </head>
 <body>
   <div class="reveal">
@@ -454,9 +456,9 @@ class="slide level2">
   <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
-  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
-  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/zoom.js"></script>
 
   <script>
 
