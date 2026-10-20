@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Увод у BPMN</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../../common/slides.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Увод у BPMN</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="шта-видите-на-овој-слици" class="slide level2">
+<h2>Шта видите на овој слици?</h2>
+<pre class="text"><code>(старт) -&gt; [Поднеси захтјев]
+                  |
+                  v
+          &lt;уплаћена такса?&gt;
+            +- да -&gt; [Издај потврду] -&gt; (крај)
+            +- не -&gt; [Затражи уплату] -&gt; (крај)</code></pre>
+<ul>
+<li>Шта мислите да значе <code>( )</code>, <code>[ ]</code> и
+<code>&lt; &gt;</code>?</li>
+<li>Ко ради који корак?</li>
+<li>Да ли бисте могли да испричате овај ток без објашњења?</li>
+</ul>
+</section>
+<section id="да-ли-препознајете-шаблон" class="slide level2">
+<h2>Да ли препознајете шаблон?</h2>
+<ul>
+<li>Гдје сте видјели нешто слично?
+<ul>
+<li>упутство у студентској служби, дијаграм тока у коду, …</li>
+</ul></li>
+<li>Исти шаблон је свуда:
+<ul>
+<li>пријава испита, одбрана рада, упис године</li>
+<li>онлајн куповина, обрада тикета, захтјев за кредит</li>
+</ul></li>
+<li>Увијек се понављају исти дијелови:
+<ul>
+<li><strong>учесници</strong> и њихове улоге</li>
+<li><strong>кораци</strong> и <strong>одлуке</strong></li>
+<li><strong>чекање</strong> на некога или нешто,
+<strong>рокови</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="шта-је-пословни-процес" class="slide level2">
+<h2>Шта је пословни процес?</h2>
+<blockquote>
+<p>Скуп повезаних активности које заједно остварују пословни циљ.</p>
+</blockquote>
+<ul>
+<li>Има почетак, крај и више могућих путања</li>
+<li>Укључује више улога (студент, референт, професор…)</li>
+<li>Често траје данима: чека се одговор, одлука или рок</li>
+</ul>
+</section>
+<section id="bpmn-business-process-model-and-notation"
+class="slide level2">
+<h2>BPMN – Business Process Model and Notation</h2>
+<ul>
+<li>Стандардни језик за цртање процеса (OMG)</li>
+<li>Исти дијаграм читају и пословни људи и програмери</li>
+<li>Може бити:
+<ul>
+<li>документација процеса</li>
+<li><strong>основа за извршавање</strong> у BPM платформи</li>
+</ul></li>
+</ul>
+</section>
+<section id="основни-елементи" class="slide level2">
+<h2>Основни елементи</h2>
+<ul>
+<li><strong>Догађај</strong> <code>( )</code>: нешто се десило
+<ul>
+<li>почетни, крајњи, међудогађај (порука, тајмер)</li>
+</ul></li>
+<li><strong>Задатак</strong> <code>[ ]</code>: неко или нешто ради посао
+<ul>
+<li>људски задатак, сервисни задатак</li>
+</ul></li>
+<li><strong>Gateway</strong> <code>&lt; &gt;</code>: одлука или гранање
+<ul>
+<li>искључиво (XOR): тачно једна путања</li>
+<li>паралелно (AND): све путање истовремено</li>
+</ul></li>
+<li><strong>Ток секвенце</strong> <code>-&gt;</code>: редослијед
+корака</li>
+</ul>
+</section>
+<section id="учесници-pool-lane-и-поруке" class="slide level2">
+<h2>Учесници: pool, lane и поруке</h2>
+<ul>
+<li><strong>Pool</strong>: један учесник (особа, организација,
+систем)</li>
+<li><strong>Lane</strong>: улога унутар учесника</li>
+<li><strong>Ток секвенце</strong>: само унутар једног pool-а</li>
+<li><strong>Ток порука</strong> <code>- - &gt;</code>: само између
+pool-ова</li>
+</ul>
+<pre class="text"><code>Студент            [Пошаљи рад]
+                         ¦
+                         ¦ порука: рад
+                         v
+Студентска служба  (Рад стигао) -&gt; [Провјери рад]</code></pre>
+</section>
+<section id="вјежба-1-пријава-испита" class="slide level2">
+<h2>Вјежба 1: пријава испита</h2>
+<p>Радите у паровима, око 15 минута.</p>
+<ol type="1">
+<li>Ко учествује? Студент, студентска служба, професор, …</li>
+<li>Шта покреће процес и како се завршава?</li>
+<li>Које су главне активности и ко их ради?</li>
+<li>Шта може да крене погрешно?
+<ul>
+<li>прошао је рок, пријава није плаћена, нису испуњени услови</li>
+</ul></li>
+<li>Нацртајте процес на папиру или у Camunda Modeler-у</li>
+</ol>
+</section>
+<section id="вјежба-2-одбрана-дипломског-рада" class="slide level2">
+<h2>Вјежба 2: одбрана дипломског рада</h2>
+<p>Радите у групама, око 20 минута.</p>
+<ul>
+<li>Учесници: студент, ментор, комисија, студентска служба</li>
+<li>Сваки учесник има свој pool</li>
+<li>Нацртајте <strong>поруке</strong> између учесника
+<ul>
+<li>предаја рада, извјештај комисије, заказивање одбране</li>
+</ul></li>
+<li>Додајте бар један рок и једно враћање на допуну</li>
+<li>Један члан групе објашњава модел осталима</li>
+</ul>
+</section>
+<section id="заједничка-анализа" class="slide level2">
+<h2>Заједничка анализа</h2>
+<p>Упоредите своје моделе:</p>
+<ul>
+<li>Да ли свака путања има почетак и крај?</li>
+<li>Да ли се зна ко ради сваки корак?</li>
+<li>Гдје процес чека и шта ако одговор не стигне?</li>
+<li>Шта је ток унутар учесника, а шта порука између њих?</li>
+<li>По чему се ваша два процеса разликују, а шта им је заједничко?</li>
+</ul>
+</section>
+<section id="зашто-процес-а-не-само-код" class="slide level2">
+<h2>Зашто процес, а не само код?</h2>
+<ul>
+<li>Када је процес „закопан“ у коду:
+<ul>
+<li>тешко га је објаснити ономе ко није писао код</li>
+<li>промјена правила значи промјене на више мјеста</li>
+<li>не види се гдје је захтјев заглављен и ко је сљедећи на реду</li>
+</ul></li>
+<li>Када је процес експлицитан:
+<ul>
+<li>модел је заједнички језик за бизнис и ИТ</li>
+<li>платформа прати стање, рокове и историју</li>
+</ul></li>
+</ul>
+</section>
+<section id="од-модела-до-извршавања-camunda-8" class="slide level2">
+<h2>Од модела до извршавања: Camunda 8</h2>
+<pre class="text"><code>Modeler: BPMN модел + форме
+      ↓  deploy
+Zeebe engine ── Tasklist ↔ корисник
+      ↕
+Job worker / connector (сервис, AI)
+
+Operate: увид у стање сваке инстанце</code></pre>
+<ul>
+<li>Модел одређује редослијед и услове</li>
+<li>Форме и промјенљиве преносе податке</li>
+<li>Сервис враћа резултат; процес одређује шта слиједи</li>
+</ul>
+<p><a href="https://docs.camunda.io/">Документација</a></p>
+</section>
+<section id="како-радимо-ове-године" class="slide level2">
+<h2>Како радимо ове године</h2>
+<ul>
+<li>Око 10 термина, рад и провјере су на часу</li>
+<li>Заједнички примјер: захтјев за надокнаду трошкова са рачуном</li>
+<li>Три контролне тачке: моделовање, извршавање, AI интеграција</li>
+<li>Распоред и детаљи су у README-у на репозиторијуму</li>
+</ul>
+</section>
+<section id="сљедећи-час" class="slide level2">
+<h2>Сљедећи час</h2>
+<ul>
+<li>Гранања и паралелне активности</li>
+<li>Догађаји, чекање и тајмери</li>
+<li>Анализа исправних и погрешних BPMN модела</li>
+</ul>
+</section>
+<section id="да-ли-имате-питања" class="slide level2">
+<h2>Да ли имате питања?</h2>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
