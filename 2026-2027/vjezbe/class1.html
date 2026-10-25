@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reveal.css">
   <style>
     .reveal .sourceCode {  /* see #7635 */
       overflow: visible;
@@ -34,7 +34,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="../../common/slides.css"/>
 </head>
 <body>
@@ -46,18 +46,52 @@
   <p class="subtitle">Управљање пословним процесима</p>
 </section>
 
-<section id="шта-видите-на-овој-слици" class="slide level2">
-<h2>Шта видите на овој слици?</h2>
-<pre class="text"><code>(старт) -&gt; [Поднеси захтјев]
-                  |
-                  v
-          &lt;уплаћена такса?&gt;
-            +- да -&gt; [Издај потврду] -&gt; (крај)
-            +- не -&gt; [Затражи уплату] -&gt; (крај)</code></pre>
+<section id="чиме-се-тачно-бавимо-на-овом-предмету"
+class="slide level2">
+<h2>Чиме се тачно бавимо на овом предмету?</h2>
 <ul>
-<li>Шта мислите да значе <code>( )</code>, <code>[ ]</code> и
-<code>&lt; &gt;</code>?</li>
-<li>Ко ради који корак?</li>
+<li>Анализирајте идући примјер:
+<ol type="1">
+<li>Запослени захтијева рекламацију рачуна</li>
+<li>Овлашћено лице анализира захтјев и рачун</li>
+<li>Спрам закона о рекламацији овлашћено лице потврђује или одбија
+рекламацију</li>
+<li>Запослени бива обавијештен о исходу рекламације</li>
+</ol></li>
+</ul>
+</section>
+<section id="како-бисте-ово-направили-у-коду" class="slide level2">
+<h2>Како бисте ово направили у коду?</h2>
+<p>Дискусија у паровима, 5 минута, без писања кода.</p>
+<ul>
+<li>Које табеле и која стања захтјева су вам потребни?</li>
+<li>Који endpoint-и или handler-и мијењају стање?</li>
+<li>Ко и како обавјештава запосленог?</li>
+</ul>
+</section>
+<section id="шта-ако" class="slide level2">
+<h2>Шта ако…?</h2>
+<p>За сваки захтјев: шта мијењате у свом рјешењу?</p>
+<ul>
+<li>Овлашћено лице има законски рок за одговор. Шта ако не
+одговори?</li>
+<li>Сервер се рестартује док захтјев чека одлуку.</li>
+<li>„Гдје је заглављен захтјев #1234 и колико дуго?“</li>
+<li>Изнад неког износа треба друго одобрење, а 300 захтјева је већ у
+току.</li>
+</ul>
+<p>Шта сте заправо направили? Скривени ток: стање у табели, cron за
+рокове, лог за историју, правила у више фајлова.</p>
+</section>
+<section class="slide level2">
+
+<p><img data-src="bpmn.png" /></p>
+</section>
+<section id="шта-видите-на-дијаграму" class="slide level2">
+<h2>Шта видите на дијаграму?</h2>
+<ul>
+<li>Шта мислите да значе кругови, правоугаоници и ромб?</li>
+<li>Гдје је који корак из текста?</li>
 <li>Да ли бисте могли да испричате овај ток без објашњења?</li>
 </ul>
 </section>
@@ -109,21 +143,20 @@ class="slide level2">
 <section id="основни-елементи" class="slide level2">
 <h2>Основни елементи</h2>
 <ul>
-<li><strong>Догађај</strong> <code>( )</code>: нешто се десило
+<li><strong>Догађај</strong>: нешто се десило
 <ul>
 <li>почетни, крајњи, међудогађај (порука, тајмер)</li>
 </ul></li>
-<li><strong>Задатак</strong> <code>[ ]</code>: неко или нешто ради посао
+<li><strong>Задатак</strong>: неко или нешто ради посао
 <ul>
 <li>људски задатак, сервисни задатак</li>
 </ul></li>
-<li><strong>Gateway</strong> <code>&lt; &gt;</code>: одлука или гранање
+<li><strong>Gateway</strong>: одлука или гранање
 <ul>
 <li>искључиво (XOR): тачно једна путања</li>
 <li>паралелно (AND): све путање истовремено</li>
 </ul></li>
-<li><strong>Ток секвенце</strong> <code>-&gt;</code>: редослијед
-корака</li>
+<li><strong>Ток секвенце</strong>: редослијед корака</li>
 </ul>
 </section>
 <section id="учесници-pool-lane-и-поруке" class="slide level2">
@@ -133,14 +166,8 @@ class="slide level2">
 систем)</li>
 <li><strong>Lane</strong>: улога унутар учесника</li>
 <li><strong>Ток секвенце</strong>: само унутар једног pool-а</li>
-<li><strong>Ток порука</strong> <code>- - &gt;</code>: само између
-pool-ова</li>
+<li><strong>Ток порука</strong>: само између pool-ова</li>
 </ul>
-<pre class="text"><code>Студент            [Пошаљи рад]
-                         ¦
-                         ¦ порука: рад
-                         v
-Студентска служба  (Рад стигао) -&gt; [Провјери рад]</code></pre>
 </section>
 <section id="вјежба-1-пријава-испита" class="slide level2">
 <h2>Вјежба 1: пријава испита</h2>
@@ -181,21 +208,34 @@ pool-ова</li>
 <li>По чему се ваша два процеса разликују, а шта им је заједничко?</li>
 </ul>
 </section>
-<section id="зашто-процес-а-не-само-код" class="slide level2">
-<h2>Зашто процес, а не само код?</h2>
+<section id="шта-добијамо-када-је-процес-експлицитан"
+class="slide level2">
+<h2>Шта добијамо када је процес експлицитан?</h2>
+<p>Одговори на питања „Шта ако…?“ са почетка часа:</p>
 <ul>
-<li>Када је процес „закопан“ у коду:
-<ul>
-<li>тешко га је објаснити ономе ко није писао код</li>
-<li>промјена правила значи промјене на више мјеста</li>
-<li>не види се гдје је захтјев заглављен и ко је сљедећи на реду</li>
-</ul></li>
-<li>Када је процес експлицитан:
-<ul>
-<li>модел је заједнички језик за бизнис и ИТ</li>
-<li>платформа прати стање, рокове и историју</li>
-</ul></li>
+<li><strong>Трајност</strong>: процес преживи рестарт и наставља од
+правог корака</li>
+<li><strong>Рокови и понављања у моделу</strong>: тајмер умјесто
+cron-а</li>
+<li><strong>Видљивост</strong>: за сваку инстанцу се види гдје је и
+зашто је стала</li>
+<li><strong>Верзије</strong>: нови модел ради упоредо са инстанцама које
+су у току</li>
+<li><strong>Подјела посла</strong>: модел одлучује шта и када, код
+одлучује како</li>
+<li><strong>AI са оградама</strong>: провјера резултата, људски преглед,
+резервни ток</li>
 </ul>
+</section>
+<section id="када-се-не-исплати" class="slide level2">
+<h2>Када се не исплати?</h2>
+<ul>
+<li>Кратка синхрона логика: један захтјев, један одговор</li>
+<li>Једноставан ток без чекања, рокова и више учесника</li>
+<li>Тим жели све у коду: code-first алати (нпр. Temporal) рјешавају
+трајност, али нема модела који читају и не-програмери</li>
+</ul>
+<p>Циљ није да волите BPMN, већ да свјесно бирате.</p>
 </section>
 <section id="од-модела-до-извршавања-camunda-8" class="slide level2">
 <h2>Од модела до извршавања: Camunda 8</h2>
@@ -236,12 +276,12 @@ Operate: увид у стање сваке инстанце</code></pre>
     </div>
   </div>
 
-  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/notes.js"></script>
-  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/search.js"></script>
-  <script src="https://unpkg.com/reveal.js@^5/dist/plugin/zoom.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/zoom.js"></script>
 
   <script>
 

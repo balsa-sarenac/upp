@@ -25,7 +25,7 @@ pdf: $(PDF)
 
 %.pdf: %.md $(COMMON)/header.tex
 	pandoc $< -t beamer -o $@ --pdf-engine=$(PDF_ENGINE) -V theme:metropolis \
-		--include-in-header=$(COMMON)/header.tex
+		--include-in-header=$(COMMON)/header.tex --resource-path=$(dir $<)
 
 clean:
 	rm -f $(HTML) $(PDF)
