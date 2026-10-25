@@ -1,0 +1,21 @@
+// Teaching overview; arrows show interactions, not deployment topology.
+digraph Camunda {
+  graph [bgcolor="white", pad="0.3", nodesep="0.45", ranksep="0.5", splines=spline];
+  node [shape=box, style=filled, fillcolor="white", color="#555555", fontname="DejaVu Sans", fontsize=18, fontcolor="#222222", margin="0.22,0.15", penwidth=1];
+  edge [fontname="DejaVu Sans", fontsize=13, color="#555555", fontcolor="#333333", arrowsize=0.8, penwidth=1];
+
+  modeler [label="Modeler\nBPMN модел + форме"];
+  zeebe [label="Zeebe\nИзвршава процес", fillcolor="#eeeeee", fontsize=20];
+  tasklist [label="Tasklist\nЉудски задаци:\nформе, одобрења"];
+  workers [label="Сервиси\nПозиви API-ја, AI"];
+  operate [label="Operate\nУвид у стање процеса и грешке"];
+
+  modeler -> zeebe [label="deploy"];
+  { rank=same; tasklist; zeebe; workers; }
+  tasklist -> zeebe -> workers [style=invis, weight=100];
+  zeebe -> tasklist [label="задатак", constraint=false];
+  tasklist -> zeebe [label="резултат", constraint=false];
+  zeebe -> workers [label="задатак", constraint=false];
+  workers -> zeebe [label="резултат", constraint=false];
+  zeebe -> operate [dir=none, label="праћење"];
+}
