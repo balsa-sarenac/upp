@@ -30,3 +30,6 @@ Umjesto `xelatex` može i `lualatex`: `make pdf PDF_ENGINE=lualatex`.
 
 Za PDF verziju potreban je font koji podržava ćirilicu.
 Trenutno se koristi font [DejaVu Sans](https://dejavu-fonts.github.io/).
+
+Za SVG dijagrame u prezentaciji drugog časa potreban je i `rsvg-convert`
+(iz paketa librsvg) pri izgradnji PDF-a. HTML koristi izvorne SVG slike.

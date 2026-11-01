@@ -1,0 +1,107 @@
+[
+  {
+    "name": "01-starter",
+    "title": "Почетна скица — правила тек треба разјаснити",
+    "audience": "student"
+  },
+  {
+    "name": "02-approval",
+    "title": "Износ и одлука руководиоца",
+    "audience": "student"
+  },
+  {
+    "name": "03-parallel",
+    "title": "Двије провјере, па одлука",
+    "audience": "student"
+  },
+  {
+    "name": "04-waiting",
+    "title": "Стање: буџет је провјерен, доступност још траје",
+    "audience": "student"
+  },
+  {
+    "name": "05-wrong-xor-and",
+    "title": "Намјерна грешка: бира се једна грана, а чекају обје",
+    "audience": "student"
+  },
+  {
+    "name": "06-wrong-and-xor",
+    "title": "Намјерна грешка: двије гране, без синхронизације",
+    "audience": "student"
+  },
+  {
+    "name": "08-supplier",
+    "title": "Пријем одговора са роком од 24 часа",
+    "audience": "student"
+  },
+  {
+    "name": "10-boundary-timers",
+    "title": "Подсјетник оставља задатак активним; рок га прекида",
+    "audience": "student"
+  },
+  {
+    "name": "11-error-scope",
+    "title": "Грешка прекида цијели потпроцес провјера",
+    "audience": "student"
+  },
+  {
+    "name": "12-error-active",
+    "title": "Сценарио: грешка у доступности, буџет још активан",
+    "audience": "student"
+  },
+  {
+    "name": "13-collapsed",
+    "title": "Исти опсег, склопљен приказ",
+    "audience": "student"
+  },
+  {
+    "name": "17-base-overview",
+    "title": "Основни модел набавке — повезана цјелина",
+    "audience": "student"
+  },
+  {
+    "name": "19-shared-deadline-solution",
+    "title": "Рјешење: заједнички рок обје провјере",
+    "audience": "student"
+  },
+  {
+    "name": "20-sequence",
+    "title": "Почетак, задатак, крај",
+    "audience": "student"
+  },
+  {
+    "name": "21-minimal-xor",
+    "title": "XOR: једна од двије путање",
+    "audience": "student"
+  },
+  {
+    "name": "22-minimal-and",
+    "title": "AND: покренути обје, сачекати обје",
+    "audience": "student"
+  },
+  {
+    "name": "23-interrupting",
+    "title": "Прекидни тајмер",
+    "audience": "student"
+  },
+  {
+    "name": "24-noninterrupting",
+    "title": "Непрекидни тајмер",
+    "audience": "student"
+  },
+  {
+    "name": "25-minimal-error",
+    "title": "Потпроцес: нормалан исход и грешка",
+    "audience": "student"
+  },
+  {
+    "name": "26-wrong-timer-scope",
+    "title": "Намјерна грешка: рок је само на једној провјери",
+    "audience": "student"
+  },
+  {
+    "name": "28-exit-preparation",
+    "title": "Самостално: рок припреме испоруке",
+    "audience": "student"
+  }
+]

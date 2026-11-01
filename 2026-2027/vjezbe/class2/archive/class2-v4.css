@@ -1,0 +1,26 @@
+/* Diagram-led class 2: fixed image area inside Reveal's scaled slide. */
+.reveal .slides section img[aria-label] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 330px !important;
+  max-height: 330px;
+  object-fit: contain;
+  background: #fff;
+  margin: 10px auto;
+  border: 0;
+  box-shadow: none;
+}
+.reveal .slides section p { margin: 0.65em 0; }
+
+/* The connected overview gets the slide; explanations are on adjacent slides. */
+.reveal .slides section img.overview {
+  height: 460px !important;
+  max-height: 460px;
+}
+
+/* Task statements and criteria need more space for text. */
+.reveal .slides section img.compact {
+  height: 230px !important;
+  max-height: 230px;
+}

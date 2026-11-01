@@ -1,0 +1,147 @@
+[
+  {
+    "name": "29-and-running",
+    "source": "34-and-execution",
+    "title": "Обје провјере раде",
+    "activeEdges": [
+      "Fork:Budget",
+      "Fork:Stock"
+    ],
+    "activeNodes": [
+      "Budget",
+      "Stock"
+    ],
+    "futureEdges": [
+      "Join:Next",
+      "Next:End"
+    ],
+    "futureNodes": [
+      "Next"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "У току"
+      ],
+      [
+        "Stock",
+        "У току"
+      ],
+      [
+        "Next",
+        "Није почело"
+      ]
+    ]
+  },
+  {
+    "name": "30-and-waiting",
+    "source": "34-and-execution",
+    "title": "Буџет је провјерен, чека се доступност",
+    "doneEdges": [
+      "Fork:Budget",
+      "Budget:Join"
+    ],
+    "doneNodes": [
+      "Budget"
+    ],
+    "activeEdges": [
+      "Fork:Stock"
+    ],
+    "activeNodes": [
+      "Stock"
+    ],
+    "waitingNodes": [
+      "Join"
+    ],
+    "futureEdges": [
+      "Join:Next",
+      "Next:End"
+    ],
+    "futureNodes": [
+      "Next"
+    ],
+    "joinLabel": [
+      "Чека",
+      "доступност"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "Завршено"
+      ],
+      [
+        "Stock",
+        "У току"
+      ],
+      [
+        "Next",
+        "Није почело"
+      ]
+    ]
+  },
+  {
+    "name": "35-and-joined",
+    "source": "34-and-execution",
+    "title": "Обје провјере су завршене, процес наставља",
+    "doneEdges": [
+      "Fork:Budget",
+      "Fork:Stock",
+      "Budget:Join",
+      "Stock:Join"
+    ],
+    "doneNodes": [
+      "Budget",
+      "Stock",
+      "Join"
+    ],
+    "activeEdges": [
+      "Join:Next"
+    ],
+    "activeNodes": [
+      "Next"
+    ],
+    "futureEdges": [
+      "Next:End"
+    ],
+    "joinLabel": [
+      "Обје",
+      "завршене"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "Завршено"
+      ],
+      [
+        "Stock",
+        "Завршено"
+      ],
+      [
+        "Next",
+        "У току"
+      ]
+    ]
+  },
+  {
+    "name": "31-boundary-detail",
+    "source": "19-shared-deadline-solution",
+    "title": "Три догађаја на граници потпроцеса",
+    "bounds": [
+      55,
+      380,
+      710,
+      200
+    ],
+    "keep": [
+      "Sub",
+      "Catch",
+      "Reminder",
+      "Deadline"
+    ],
+    "flowSources": [
+      "Catch",
+      "Reminder",
+      "Deadline"
+    ]
+  }
+]

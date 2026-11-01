@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>BPMN</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../../../../common/slides.css"/>
+  <link rel="stylesheet" href="class2-v4.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">BPMN</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="прочитајте-ток" class="slide level2">
+<h2>Прочитајте ток</h2>
+<p><img data-src="bpmn-class2-v4/20-sequence.svg" style="height:65.0%"
+aria-label="Прочитајте ток" /></p>
+<p>Кругови означавају почетак и крај; задатак је посао који треба
+обавити. Стрелица задаје редослијед.</p>
+<p><strong>Свако за себе: шта је активно док преглед још траје? Затим
+упоредите.</strong></p>
+</section>
+<section id="xor-једна-путања" class="slide level2">
+<h2>XOR: једна путања</h2>
+<p><img data-src="bpmn-class2-v4/21-minimal-xor.svg" style="height:65.0%"
+aria-label="XOR: једна путања" /></p>
+<p>Одлука користи познат податак и бира једну путању.</p>
+<p><strong>Захтјев је одбијен. Који посао се обавља, а који се
+прескаче?</strong></p>
+</section>
+<section id="and-обје-гране" class="slide level2">
+<h2>AND: обје гране</h2>
+<p><img data-src="bpmn-class2-v4/22-minimal-and.svg" style="height:65.0%"
+aria-label="AND: обје гране" /></p>
+<p>Раздвајање покреће обје гране; спајање чека обје.</p>
+<p><strong>Буџет је провјерен, доступност још није. Може ли процес да се
+заврши?</strong></p>
+</section>
+<section id="задатак-a-набавка-робе" class="slide level2">
+<h2>Задатак A: набавка робе</h2>
+<p><img data-src="bpmn-class2-v4/01-starter.svg" class="compact"
+style="height:48.0%" aria-label="Задатак A: набавка робе" /></p>
+<p>Запослени тражи робу. Преко 1.000 € треба одобрење руководиоца;
+одбијање завршава захтјев. Иначе се буџет и доступност провјеравају
+независно и истовремено. Сачекајте обје провјере. Наручујемо само ако су
+оба резултата позитивна. Сваки исход јављамо запосленом.</p>
+<p><strong>Прво свако скицира одлуке; затим у пару направите
+модел.</strong></p>
+</section>
+<section id="када-је-модел-исправан" class="slide level2">
+<h2>Када је модел исправан?</h2>
+<p><img data-src="bpmn-class2-v4/20-sequence.svg" class="compact"
+style="height:48.0%" aria-label="Када је модел исправан?" /></p>
+<ul>
+<li>Одбијен захтјев не стиже до наручивања.</li>
+<li>Обје провјере се заврше прије одлуке о резултатима.</li>
+<li>Набавка и обавјештење не покрећу се двапут.</li>
+<li>Свака завршна путања обавјештава запосленог.</li>
+</ul>
+<p><strong>Ово су критеријуми за преглед вашег модела.</strong></p>
+</section>
+<section id="рјешење-a-један-повезан-модел" class="slide level2">
+<h2>Рјешење A: један повезан модел</h2>
+<p><img data-src="bpmn-class2-v4/17-base-overview.svg" class="overview"
+style="height:84.0%" aria-label="Рјешење A: један повезан модел" /></p>
+</section>
+<section id="зашто-овакво-рјешење" class="slide level2">
+<h2>Зашто овакво рјешење?</h2>
+<p><img data-src="bpmn-class2-v4/03-parallel.svg" style="height:65.0%"
+aria-label="Зашто овакво рјешење?" /></p>
+<p>AND чека завршетак рада; XOR чита резултате. Завршена провјера не
+мора бити позитивна.</p>
+<p><strong>Који захтјев оправдава сваки gateway? Исправите свој модел
+прије наставка.</strong></p>
+</section>
+<section id="прекидни-тајмер" class="slide level2">
+<h2>Прекидни тајмер</h2>
+<p><img data-src="bpmn-class2-v4/23-interrupting.svg" style="height:65.0%"
+aria-label="Прекидни тајмер" /></p>
+<p>Ако преглед није завршен за два дана, пун обод означава прекид
+задатка.</p>
+<p><strong>Може ли након истека овог рока преглед завршити нормалном
+путањом?</strong></p>
+</section>
+<section id="подсјетник-без-прекида" class="slide level2">
+<h2>Подсјетник без прекида</h2>
+<p><img data-src="bpmn-class2-v4/24-noninterrupting.svg"
+style="height:65.0%" aria-label="Подсјетник без прекида" /></p>
+<p>Испрекидан обод: послије дана шаљемо један подсјетник. Преглед остаје
+активан.</p>
+<p><strong>Шта је и даље активно када се заврши грана
+подсјетника?</strong></p>
+</section>
+<section id="потпроцес-и-грешка" class="slide level2">
+<h2>Потпроцес и грешка</h2>
+<p><img data-src="bpmn-class2-v4/25-minimal-error.svg" style="height:65.0%"
+aria-label="Потпроцес и грешка" /></p>
+<p>Потпроцес задаје опсег рада. Error end баца грешку; boundary на
+граници прекида тај опсег и покреће обраду.</p>
+<p><strong>Којом путањом идемо ако је шифра исправна, а којом ако
+није?</strong></p>
+</section>
+<section id="задатак-b-провјере-као-цјелина" class="slide level2">
+<h2>Задатак B: провјере као цјелина</h2>
+<p><img data-src="bpmn-class2-v4/03-parallel.svg" style="height:65.0%"
+aria-label="Задатак B: провјере као цјелина" /></p>
+<p>Дорадите свој модел A. Неважећа шифра артикла мора прекинути обје
+провјере, укључујући другу ако још траје. Обавијестите запосленог да
+треба да пошаље нов, исправљен захтјев.</p>
+<p><strong>Не мијењајте правило за обичан негативан резултат
+провјере.</strong></p>
+</section>
+<section id="задатак-b-заједнички-рок" class="slide level2">
+<h2>Задатак B: заједнички рок</h2>
+<p><img data-src="bpmn-class2-v4/22-minimal-and.svg" class="compact"
+style="height:48.0%" aria-label="Задатак B: заједнички рок" /></p>
+<p>Обје провјере заједно имају рок од 48 часова. Послије 24 часа шаљемо
+један подсјетник без прекида провјера. Истек рока прекида незавршене
+провјере и води на ручну провјеру услова. Њени резултати одређују
+наставак набавке.</p>
+<p><strong>Кратка индивидуална скица, затим једно рјешење у
+пару.</strong></p>
+</section>
+<section id="припремите-објашњење-свог-модела" class="slide level2">
+<h2>Припремите објашњење свог модела</h2>
+<p><img data-src="bpmn-class2-v4/04-waiting.svg" style="height:65.0%"
+aria-label="Припремите објашњење свог модела" /></p>
+<p>Обје провјере заврше за 10 часова; једна за 20, друга за 30 часова;
+једна за 20, друга још траје након 48 часова.</p>
+<p><strong>За сваки случај покажите активно чекање, подсјетник и
+наставак.</strong></p>
+</section>
+<section id="рјешење-b-опсег-оба-рока" class="slide level2">
+<h2>Рјешење B: опсег оба рока</h2>
+<p><img data-src="bpmn-class2-v4/19-shared-deadline-solution.svg"
+class="overview" style="height:84.0%"
+aria-label="Рјешење B: опсег оба рока" /></p>
+</section>
+<section id="зашто-су-рокови-на-потпроцесу" class="slide level2">
+<h2>Зашто су рокови на потпроцесу?</h2>
+<p><img data-src="bpmn-class2-v4/19-shared-deadline-solution.svg"
+style="height:65.0%" aria-label="Зашто су рокови на потпроцесу?" /></p>
+<p>Рок важи за обје провјере заједно. Подсјетник их не прекида; истек
+рока прекида преостали рад. Ручна провјера је изван тог опсега.</p>
+<p><strong>Провјерите три случаја и исправите свој модел.</strong></p>
+</section>
+<section id="честа-грешка-једна-грана-чекамо-обје" class="slide level2">
+<h2>Честа грешка: једна грана, чекамо обје</h2>
+<p><img data-src="bpmn-class2-v4/05-wrong-xor-and.svg" style="height:65.0%"
+aria-label="Честа грешка: једна грана, чекамо обје" /></p>
+<p><strong>Намјерно погрешан модел.</strong> Изабрана је само једна
+провјера.</p>
+<p>Који токен AND неће добити? Предложите исправку и објасните је.</p>
+</section>
+<section id="честа-грешка-двије-гране-без-чекања" class="slide level2">
+<h2>Честа грешка: двије гране, без чекања</h2>
+<p><img data-src="bpmn-class2-v4/06-wrong-and-xor.svg" style="height:65.0%"
+aria-label="Честа грешка: двије гране, без чекања" /></p>
+<p><strong>Намјерно погрешан модел.</strong> XOR спајање не синхронизује
+гране.</p>
+<p>Колико пута може кренути наставак? Наведите конкретан редослијед
+завршетака.</p>
+</section>
+<section id="честа-грешка-рок-на-погрешном-опсегу" class="slide level2">
+<h2>Честа грешка: рок на погрешном опсегу</h2>
+<p><img data-src="bpmn-class2-v4/26-wrong-timer-scope.svg"
+style="height:65.0%"
+aria-label="Честа грешка: рок на погрешном опсегу" /></p>
+<p><strong>Намјерно погрешан модел.</strong> Рок је постављен само на
+провјеру буџета.</p>
+<p>Буџет заврши за 20 часова, доступност траје 60. Да ли се активира
+ручна провјера?</p>
+</section>
+<section id="самостално-без-гледања-рјешења" class="slide level2">
+<h2>Самостално, без гледања рјешења</h2>
+<p><img data-src="bpmn-class2-v4/28-exit-preparation.svg"
+style="height:65.0%" aria-label="Самостално, без гледања рјешења" /></p>
+<p>Цијела припрема испоруке има рок од три часа. Ако истекне, прекините
+оба посла и обавијестите оператера.</p>
+<p><strong>Скицирајте опсег рока и резервни ток. Објасните избор у
+једној реченици.</strong></p>
+</section>
+<section id="додатак-чекање-одговора-добављача" class="slide level2">
+<h2>Додатак: чекање одговора добављача</h2>
+<p><img data-src="bpmn-class2-v4/08-supplier.svg" style="height:65.0%"
+aria-label="Додатак: чекање одговора добављача" /></p>
+<p>Receive task чека поруку; прекидни тајмер ограничава чекање. XOR
+након пријема чита одговор.</p>
+<p><strong>Касни одговор не отвара поново затворен захтјев.</strong></p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^6/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

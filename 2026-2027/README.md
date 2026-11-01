@@ -1,6 +1,6 @@
 # Upravljanje poslovnim procesima
 
-## Vježbe 2026–2027
+## Vježbe 2026-2027
 
 Potreban softver: [Camunda 8](https://docs.camunda.io/)
 
@@ -9,8 +9,8 @@ Okviran raspored po sedmicama:
 | Sedmica | Tema i rad na času | Provjera |
 | --- | --- | --- |
 | 1 | BPMN: učesnici, saradnja i tokovi poruka | |
-| 2 | Grananja, paralelizam i događaji | |
-| 3 | Potprocesi i izuzeci | Kontrolna tačka 1: modelovanje |
+| 2 | Grananja, paralelizam, događaji, potprocesi i izuzeci | |
+| 3 | Utvrđivanje modelovanja; forme i promjenljive ako ostane vremena | Kontrolna tačka 1: modelovanje |
 | 4 | Camunda: forme, promjenljive i ljudski zadaci | |
 | 5 | Servisna integracija i izvršavanje malog procesa | Kontrolna tačka 2: izvršavanje |
 | 6 | Upotreba AI u razvoju: generisanje i pregled modela, nedostajući zahtjevi i greške | |
@@ -24,3 +24,12 @@ Materijali su na Canvas-u.
 ## Prvi čas: uvod u BPMN
 
 - [Prezentacija (HTML)](vjezbe/class1/class1.html) · [PDF](vjezbe/class1/class1.pdf)
+
+## Drugi čas: BPMN radionica
+
+- [Prezentacija (HTML)](vjezbe/class2/class2.html) · [PDF](vjezbe/class2/class2.pdf)
+- [BPMN dijagrami i modeli za uređivanje](vjezbe/class2/bpmn-class2/README.md)
+- [Zadaci A i B i završna provjera](vjezbe/class2/zadatak-class2.md)
+
+- [Napomene za nastavnika](vjezbe/class2/napomene-class2.md)
+- [Arhiva prethodnih verzija](vjezbe/class2/archive/README.md)

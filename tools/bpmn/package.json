@@ -1,0 +1,13 @@
+{
+  "name": "upp-bpmn-diagrams",
+  "private": true,
+  "scripts": {
+    "generate": "python3 generate.py",
+    "render": "node render.mjs",
+    "audit": "node audit.mjs"
+  },
+  "dependencies": {
+    "bpmn-js": "18.31.1",
+    "playwright": "1.56.1"
+  }
+}

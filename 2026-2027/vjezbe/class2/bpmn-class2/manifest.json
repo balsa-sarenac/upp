@@ -1,0 +1,146 @@
+[
+  {
+    "name": "01-starter",
+    "title": "Почетна скица: правила тек треба разјаснити",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "02-approval",
+    "title": "Износ и одлука руководиоца",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "03-parallel",
+    "title": "Двије провјере, па одлука",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "04-waiting",
+    "title": "Стање: буџет је провјерен, доступност још траје",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "05-wrong-xor-and",
+    "title": "Намјерна грешка: бира се једна грана, а чекају обје",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "06-wrong-and-xor",
+    "title": "Намјерна грешка: двије гране, без синхронизације",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "08-supplier",
+    "title": "Пријем одговора са роком од 24 часа",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "10-boundary-timers",
+    "title": "Подсјетник оставља задатак активним; рок га прекида",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "11-error-scope",
+    "title": "Грешка прекида цијели потпроцес провјера",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "12-error-active",
+    "title": "Сценарио: грешка у доступности, буџет још активан",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "13-collapsed",
+    "title": "Исти опсег, склопљен приказ",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "17-base-overview",
+    "title": "Основни модел набавке: повезана цјелина",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "19-shared-deadline-solution",
+    "title": "Рјешење: заједнички рок обје провјере",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "20-sequence",
+    "title": "Почетак, задатак, крај",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "21-minimal-xor",
+    "title": "XOR: једна од двије путање",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "22-minimal-and",
+    "title": "AND: покренути обје, сачекати обје",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "23-interrupting",
+    "title": "Прекидни тајмер",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "24-noninterrupting",
+    "title": "Непрекидни тајмер",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "25-minimal-error",
+    "title": "Потпроцес: нормалан исход и грешка",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "26-wrong-timer-scope",
+    "title": "Намјерна грешка: рок је само на једној провјери",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "28-exit-preparation",
+    "title": "Самостално: рок припреме испоруке",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "32-manual-return",
+    "title": "Рјешење B: нормалан и ручни наставак",
+    "audience": "student",
+    "fontSize": 18
+  },
+  {
+    "name": "33-xor-merge",
+    "title": "Спајање алтернативних путања",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "34-and-execution",
+    "title": "Паралелне провјере и заједнички наставак",
+    "audience": "student",
+    "fontSize": 16
+  }
+]

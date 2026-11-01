@@ -1,5 +1,5 @@
 # make | make html | make pdf | make YEAR=2025-2026
-# Individual lesson: make 2026-2027/vjezbe/class1/class1.pdf
+# Individual lesson: make 2026-2027/vjezbe/class2/class2.pdf
 YEAR ?= 2026-2027
 COMMON := common
 PDF_ENGINE ?= xelatex
@@ -25,3 +25,17 @@ pdf: $(PDF)
 
 clean:
 	rm -f $(HTML) $(PDF)
+
+CLASS2 := 2026-2027/vjezbe/class2
+$(CLASS2)/class2.html $(CLASS2)/class2.pdf: $(wildcard $(CLASS2)/bpmn-class2/*.svg)
+$(CLASS2)/class2.html: EXTRA_CSS = -c class2.css
+$(CLASS2)/class2.html: $(CLASS2)/class2.css
+
+# Archived drafts are built only when explicitly requested.
+ARCHIVE := $(CLASS2)/archive
+$(ARCHIVE)/class2-v1.html $(ARCHIVE)/class2-v2.html: EXTRA_CSS = -c class2.css
+$(ARCHIVE)/class2-v1.html $(ARCHIVE)/class2-v2.html: $(ARCHIVE)/class2.css
+$(ARCHIVE)/class2-v3.html: EXTRA_CSS = -c class2-v3.css
+$(ARCHIVE)/class2-v3.html: $(ARCHIVE)/class2-v3.css
+$(ARCHIVE)/class2-v4.html: EXTRA_CSS = -c class2-v4.css
+$(ARCHIVE)/class2-v4.html: $(ARCHIVE)/class2-v4.css
