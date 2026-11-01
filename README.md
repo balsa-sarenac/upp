@@ -5,7 +5,7 @@
 
 ## Prezentacije
 
-Prezentacije se pišu u Markdown-u (`<godina>/vjezbe/classN.md`) i
+Prezentacije se pišu u Markdown-u (`<godina>/vjezbe/classN/classN.md`) i
 kompajliraju u HTML (reveal.js) i PDF (beamer). Iz korijena repozitorijuma:
 
 ```
@@ -13,7 +13,7 @@ make                         # sve prezentacije za tekuću godinu
 make html                    # samo HTML
 make pdf                     # samo PDF
 make YEAR=2025-2026          # druga školska godina
-make 2026-2027/vjezbe/class1.pdf
+make 2026-2027/vjezbe/class1/class1.pdf
 ```
 
 Zajednički stil i LaTeX zaglavlje su u direktorijumu `common/`.

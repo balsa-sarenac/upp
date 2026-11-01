@@ -20,3 +20,7 @@ Okviran raspored po sedmicama:
 | 10 | Povratne informacije i preostale provjere | Ponovna provjera znanja |
 
 Materijali su na Canvas-u.
+
+## Prvi čas: uvod u BPMN
+
+- [Prezentacija (HTML)](vjezbe/class1/class1.html) · [PDF](vjezbe/class1/class1.pdf)
