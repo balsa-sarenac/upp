@@ -19,3 +19,6 @@ Session.vim
 
 opencodetmp/
 .DS_Store
+
+# Local BPMN rendering dependencies
+tools/bpmn/node_modules/
