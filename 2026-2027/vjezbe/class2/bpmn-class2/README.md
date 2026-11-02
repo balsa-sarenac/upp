@@ -60,9 +60,9 @@ Boje su ilustracija scenarija, ne dodatna BPMN notacija ni simulacija.
 
 [Model za uređivanje](11-error-scope.bpmn) · [SVG](11-error-scope.svg) · [PNG](11-error-scope.png)
 
-## Сценарио: грешка у доступности, буџет још активан
+## Сценарио: неважећа шифра, буџет још активан
 
-![Сценарио: грешка у доступности, буџет још активан](12-error-active.png)
+![Сценарио: неважећа шифра, буџет још активан](12-error-active.png)
 
 [Model za uređivanje](12-error-active.bpmn) · [SVG](12-error-active.svg) · [PNG](12-error-active.png)
 
@@ -149,6 +149,36 @@ Boje su ilustracija scenarija, ne dodatna BPMN notacija ni simulacija.
 ![Паралелне провјере и заједнички наставак](34-and-execution.png)
 
 [Model za uređivanje](34-and-execution.bpmn) · [SVG](34-and-execution.svg) · [PNG](34-and-execution.png)
+
+## Врсте гранања
+
+![Врсте гранања](36-gateway-types.png)
+
+[Model za uređivanje](36-gateway-types.bpmn) · [SVG](36-gateway-types.svg) · [PNG](36-gateway-types.png)
+
+## Врсте задатака
+
+![Врсте задатака](37-task-types.png)
+
+[Model za uređivanje](37-task-types.bpmn) · [SVG](37-task-types.svg) · [PNG](37-task-types.png)
+
+## Догађаји током процеса
+
+![Догађаји током процеса](38-intermediate-types.png)
+
+[Model za uređivanje](38-intermediate-types.bpmn) · [SVG](38-intermediate-types.svg) · [PNG](38-intermediate-types.png)
+
+## Почетни догађаји
+
+![Почетни догађаји](39-start-end-types.png)
+
+[Model za uređivanje](39-start-end-types.bpmn) · [SVG](39-start-end-types.svg) · [PNG](39-start-end-types.png)
+
+## Погрешан подсјетник: терминирајући крај
+
+![Погрешан подсјетник: терминирајући крај](40-terminate-reminder.png)
+
+[Model za uređivanje](40-terminate-reminder.bpmn) · [SVG](40-terminate-reminder.svg) · [PNG](40-terminate-reminder.png)
 
 Generisano pomoću [bpmn-js](https://bpmn.io/toolkit/bpmn-js/).
 [Uputstvo za regenerisanje](../../../../tools/bpmn/README.md).

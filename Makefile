@@ -39,3 +39,7 @@ $(ARCHIVE)/class2-v3.html: EXTRA_CSS = -c class2-v3.css
 $(ARCHIVE)/class2-v3.html: $(ARCHIVE)/class2-v3.css
 $(ARCHIVE)/class2-v4.html: EXTRA_CSS = -c class2-v4.css
 $(ARCHIVE)/class2-v4.html: $(ARCHIVE)/class2-v4.css
+
+.PHONY: preview
+preview:
+	python3 tools/preview.py --class $(or $(CLASS),class2)

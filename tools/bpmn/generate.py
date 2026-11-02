@@ -89,7 +89,7 @@ manifest=[]
 def linear(name,title,labels):
     m=Model(name,title);m.n('Start','startEvent','',40,112);prev='Start'
     for i,label in enumerate(labels):
-        id=f'Task_{i}';m.n(id,'task',label,120+i*200,92);m.f(prev,id);prev=id
+        id=f'Task_{i}';m.n(id,'serviceTask' if label.startswith('Обавијестити') else 'task',label,120+i*200,92);m.f(prev,id);prev=id
     m.n('End','endEvent','',120+len(labels)*200,112);m.f(prev,'End');return m
 
 m=linear('01-starter','Почетна скица: правила тек треба разјаснити',['Примити захтјев','Провјерити услове','Наручити робу','Обавијестити запосленог']);m.save()
@@ -98,7 +98,7 @@ m=Model('02-approval','Износ и одлука руководиоца')
 m.n('Start','startEvent','',30,202);m.n('Amount','exclusiveGateway','Преко 1.000 €?',130,195)
 m.n('Approve','userTask','Одобрити набавку',270,182);m.n('Decision','exclusiveGateway','Одобрено?',485,195)
 m.n('Merge','exclusiveGateway','',700,195);m.n('Next','task','Провјерити услове',820,182);m.n('End','endEvent','',1030,202)
-m.n('Notify','sendTask','Обавијестити: одбијено',650,30,180);m.n('Rejected','endEvent','',1030,50)
+m.n('Notify','serviceTask','Обавијестити: одбијено',650,30,180);m.n('Rejected','endEvent','',1030,50)
 m.f('Start','Amount');m.f('Amount','Approve','да')
 m.f('Amount','Merge','не',[(155,245),(155,380),(725,380),(725,245)])
 m.f('Approve','Decision');m.f('Decision','Merge','да')
@@ -109,7 +109,7 @@ def checks(name,title,split='parallelGateway',join='parallelGateway',state=False
     m=Model(name,title);m.n('Start','startEvent','',30,162);m.n('Split',split,'',130,155)
     m.n('Budget','serviceTask','Провјерити буџет',255,45);m.n('Stock','serviceTask','Провјерити доступност',255,255)
     m.n('Join',join,'',500,155);m.n('Result','exclusiveGateway','Оба позитивна?',630,155)
-    m.n('Order','task','Наставити набавку',765,45);m.n('Notify','sendTask','Обавијестити: нема услова',765,255)
+    m.n('Order','task','Наставити набавку',765,45);m.n('Notify','serviceTask','Обавијестити: нема услова',765,255)
     m.n('YesEnd','endEvent','',965,65);m.n('NoEnd','endEvent','',965,275)
     m.f('Start','Split');m.f('Split','Budget','',[(155,155),(155,83),(255,83)]);m.f('Split','Stock','',[(155,205),(155,293),(255,293)])
     m.f('Budget','Join','',[(395,83),(525,83),(525,155)]);m.f('Stock','Join','',[(395,293),(525,293),(525,205)])
@@ -136,7 +136,7 @@ m.box('Deadline')['kw']['label']=(380,325,115,28)
 m.n('Decision','exclusiveGateway','Прихвата?',700,230)
 m.box('Decision')['kw']['label']=(730,292,110,35)
 m.n('Order','sendTask','Наручити робу',900,217,170)
-m.n('Notify','sendTask','Обавијестити запосленог',850,425,190)
+m.n('Notify','serviceTask','Обавијестити запосленог',850,425,190)
 m.n('Done','endEvent','',1090,445)
 m.f('Start','Send');m.f('Send','Reply');m.f('Reply','Decision');m.f('Decision','Order','да')
 m.f('Order','Notify','',[(985,293),(985,370),(945,370),(945,425)])
@@ -155,8 +155,8 @@ m.n('Start','startEvent','',40,52);m.n('Approve','userTask','Одобрити н
 m.n('Decision','exclusiveGateway','Одобрено?',650,45);m.n('Continue','task','Наставити набавку',800,32);m.n('Done','endEvent','',1010,52)
 m.n('Reminder','boundaryEvent','1 дан',270,124,attachedToRef='Approve',cancelActivity='false',definition=('timerEventDefinition',{},'P1D'))
 m.n('Deadline','boundaryEvent','2 дана',420,124,attachedToRef='Approve',cancelActivity='true',definition=('timerEventDefinition',{},'P2D'))
-m.n('Email','sendTask','Послати подсјетник',200,280,170);m.n('ReminderEnd','endEvent','',470,300)
-m.n('Close','sendTask','Обавијестити: затворено',650,280,190);m.n('Closed','endEvent','',950,300)
+m.n('Email','serviceTask','Послати подсјетник',200,280,170);m.n('ReminderEnd','endEvent','',470,300)
+m.n('Close','serviceTask','Обавијестити: затворено',650,280,190);m.n('Closed','endEvent','',950,300)
 m.box('Reminder')['kw']['label']=(175,175,100,28);m.box('Deadline')['kw']['label']=(450,175,100,28)
 m.f('Start','Approve','',[(76,70),(145,70),(145,87),(220,87)]);m.f('Approve','Decision','',[(500,87),(575,87),(575,70),(650,70)]);m.f('Decision','Continue','да');m.f('Continue','Done')
 m.f('Reminder','Email','',[(288,160),(288,280)])
@@ -170,25 +170,29 @@ def subprocess(name,title):
     par='Sub'
     m.n('InnerStart','startEvent','',140,207,parent=par);m.n('Fork','parallelGateway','',220,200,parent=par)
     m.n('Budget','serviceTask','Провјерити буџет',335,85,155,parent=par)
-    m.n('Stock','serviceTask','Провјерити доступност',335,275,155,parent=par)
-    m.n('Valid','exclusiveGateway','Шифра исправна?',550,288,parent=par)
+    m.n('Code','serviceTask','Провјерити шифру',300,275,140,parent=par)
+    m.n('Stock','serviceTask','Провјерити доступност',610,245,160,parent=par)
+    m.n('Valid','exclusiveGateway','Шифра исправна?',475,288,parent=par)
+    m.box('Valid')['kw']['label']=(430,220,145,35)
     m.n('Join','parallelGateway','',700,130,parent=par);m.n('InnerEnd','endEvent','',795,137,parent=par)
-    m.n('Error','endEvent','Неважећи артикал',690,327,parent=par,definition=('errorEventDefinition',{'errorRef':'InvalidArticle'},''))
+    m.n('Error','endEvent','Неважећа шифра',482,365,parent=par,definition=('errorEventDefinition',{'errorRef':'InvalidArticle'},''))
+    m.box('Error')['kw']['label']=(550,370,125,30)
     m.n('Start','startEvent','',25,207);m.n('Catch','boundaryEvent','NEVAZECI_ARTIKAL',410,402,attachedToRef='Sub',cancelActivity='true',definition=('errorEventDefinition',{'errorRef':'InvalidArticle'},''))
     m.n('Next','task','Провјерити резултате',925,185,170);m.n('End','endEvent','',1140,205)
-    m.n('Notify','sendTask','Затражити исправљен захтјев',600,490,195);m.n('InvalidEnd','endEvent','',940,510)
+    m.n('Notify','serviceTask','Затражити исправљен захтјев',600,490,195);m.n('InvalidEnd','endEvent','',940,510)
     m.box('Catch')['kw']['label']=(180,450,210,35)
     m.f('Start','Sub');m.f('Sub','Next');m.f('Next','End')
     m.f('InnerStart','Fork');m.f('Fork','Budget','',[(245,200),(245,123),(335,123)])
-    m.f('Fork','Stock','',[(245,250),(245,313),(335,313)])
+    m.f('Fork','Code','',[(245,250),(245,313),(300,313)])
     m.f('Budget','Join','',[(490,123),(725,123),(725,130)])
-    m.f('Stock','Valid');m.f('Valid','Join','да',[(575,288),(575,220),(725,220),(725,180)])
-    m.f('Valid','Error','не',[(575,338),(575,345),(690,345)])
+    m.f('Code','Valid');m.f('Valid','Stock','да',[(525,313),(565,313),(565,283),(610,283)])
+    m.f('Stock','Join','',[(770,283),(820,283),(820,200),(725,200),(725,180)])
+    m.f('Valid','Error','не',[(500,338),(500,365)])
     m.f('Join','InnerEnd');m.f('Catch','Notify','',[(428,438),(428,528),(600,528)]);m.f('Notify','InvalidEnd')
     return m
 subprocess('11-error-scope','Грешка прекида цијели потпроцес провјера').save()
-m=subprocess('12-error-active','Сценарио: грешка у доступности, буџет још активан')
-m.color('Stock Valid Error Catch Notify InvalidEnd','#fde7e5','#b3261e');m.color('Budget','#eeeeee','#777777');m.save()
+m=subprocess('12-error-active','Сценарио: неважећа шифра, буџет још активан')
+m.color('Code Valid Error Catch Notify InvalidEnd','#fde7e5','#b3261e');m.color('Budget','#eeeeee','#777777');m.save()
 m=linear('13-collapsed','Исти опсег, склопљен приказ',['Примити захтјев','Провјерити услове','Наставити набавку'])
 m.box('Task_1')['typ']='subProcess';m.save()
 
@@ -204,9 +208,9 @@ m.n('Budget','serviceTask','Провјерити буџет',800,50,160)
 m.n('Stock','serviceTask','Провјерити доступност',800,300,160)
 m.n('Join','parallelGateway','',1040,185)
 m.n('Results','exclusiveGateway','Оба позитивна?',1150,185)
-m.n('Order','sendTask','Наручити робу',1280,172,160)
+m.n('Order','serviceTask','Наручити робу',1280,172,160)
 m.n('Outcomes','exclusiveGateway','',1000,553)
-m.n('Notice','sendTask','Обавијестити запосленог',750,540,180)
+m.n('Notice','serviceTask','Обавијестити запосленог',750,540,180)
 m.n('End','endEvent','',620,560)
 m.f('Start','Amount');m.f('Amount','Approve','да');m.f('Approve','Approved')
 m.f('Amount','Merge','не',[(125,185),(125,10),(595,10),(595,185)])
@@ -239,12 +243,12 @@ m.n('Reminder','boundaryEvent','24 часа',410,402,attachedToRef='Sub',cancelA
 m.n('Deadline','boundaryEvent','48 часова',610,402,attachedToRef='Sub',cancelActivity='true',definition=('timerEventDefinition',{},'PT48H'))
 m.box('Reminder')['kw']['label']=(440,450,110,30)
 m.box('Deadline')['kw']['label']=(640,450,110,30)
-m.n('ReminderTask','sendTask','Послати подсјетник',450,610,170)
+m.n('ReminderTask','serviceTask','Послати подсјетник',450,610,170)
 m.n('ReminderEnd','endEvent','',700,630)
 m.n('Manual','userTask','Ручно\nпровјерити услове',900,610,190)
 m.n('RecoveryMerge','exclusiveGateway','',965,200)
-m.n('Order','sendTask','Наручити робу',1210,187,170)
-m.n('OutcomeNotice','sendTask','Обавијестити запосленог',1210,410,190)
+m.n('Order','serviceTask','Наручити робу',1210,187,170)
+m.n('OutcomeNotice','serviceTask','Обавијестити запосленог',1210,410,190)
 m.f('Sub','RecoveryMerge');m.f('RecoveryMerge','Next')
 m.f('Next','Order','да')
 m.f('Next','OutcomeNotice','не',[(1105,250),(1105,448),(1210,448)])
@@ -265,7 +269,7 @@ m=Model('21-minimal-xor','XOR: једна од двије путање')
 m.n('Start','startEvent','',25,162)
 m.n('Choice','exclusiveGateway','Одобрено?',145,155)
 m.n('Continue','task','Наставити обраду',290,35,175)
-m.n('Reject','sendTask','Обавијестити: одбијено',290,265,175)
+m.n('Reject','serviceTask','Обавијестити: одбијено',290,265,175)
 m.n('YesEnd','endEvent','',550,55);m.n('NoEnd','endEvent','',550,285)
 m.f('Start','Choice');m.f('Choice','Continue','да',[(170,155),(170,73),(290,73)])
 m.f('Choice','Reject','не',[(170,205),(170,303),(290,303)])
@@ -293,7 +297,7 @@ for interrupting in [True,False]:
         attachedToRef='Review',cancelActivity='true' if interrupting else 'false',
         definition=('timerEventDefinition',{},'P2D' if interrupting else 'P1D'))
     m.box('Timer')['kw']['label']=(145,195,120,30)
-    m.n('Handle','sendTask','Обавијестити: затворено' if interrupting else 'Послати подсјетник',350,315,200)
+    m.n('Handle','serviceTask','Обавијестити: затворено' if interrupting else 'Послати подсјетник',350,315,200)
     m.n('HandlerEnd','endEvent','',650,335)
     m.f('Start','Review','',[(61,100),(120,100),(120,112),(180,112)])
     m.f('Review','Done');m.f('Timer','Handle','',[(290,180),(290,353),(350,353)])
@@ -311,7 +315,7 @@ m.n('Start','startEvent','',25,182)
 m.n('Catch','boundaryEvent','Грешка',410,352,attachedToRef='Sub',cancelActivity='true',definition=('errorEventDefinition',{'errorRef':'InvalidArticle'},''))
 m.box('Catch')['kw']['label']=(290,400,100,30)
 m.n('Next','task','Наставити обраду',850,162,160);m.n('End','endEvent','',1080,182)
-m.n('Notice','sendTask','Затражити исправку',550,465,180);m.n('ErrorDone','endEvent','',850,485)
+m.n('Notice','serviceTask','Затражити исправку',550,465,180);m.n('ErrorDone','endEvent','',850,485)
 m.f('Start','Sub');m.f('Sub','Next');m.f('Next','End')
 m.f('InnerStart','Check');m.f('Check','Valid')
 m.f('Valid','NormalEnd','да',[(480,153),(480,81),(640,81)])
@@ -339,8 +343,8 @@ m.n('Manual','userTask','Ручно\nпровјерити услове',240,250,
 m.n('Merge','exclusiveGateway','',450,55)
 m.n('Results','exclusiveGateway','Оба позитивна?',570,55)
 m.box('Results')['kw']['label']=(615,130,105,45)
-m.n('Order','sendTask','Наручити робу',700,35,190,90)
-m.n('Notice','sendTask','Обавијестити запосленог',700,250,190,90)
+m.n('Order','serviceTask','Наручити робу',700,35,190,90)
+m.n('Notice','serviceTask','Обавијестити запосленог',700,250,190,90)
 m.n('End','endEvent','',950,277)
 m.f('Sub','Merge');m.f('Deadline','Manual','',[(80,148),(80,295),(240,295)])
 m.f('Manual','Merge','',[(430,295),(475,295),(475,105)])
@@ -368,6 +372,53 @@ m.box('End').update(x=940)
 m.flows=[f for f in m.flows if (f['a'],f['b'])!=('Join','End')]
 m.n('Next','task','Наставити обраду',700,142,160)
 m.f('Join','Next');m.f('Next','End');m.save()
+# Reference sheets: separate symbols, not a connected executable process.
+def sheet(name, title, entries, columns=3):
+    m=Model(name,title)
+    for i,(typ,label,definition) in enumerate(entries):
+        x=90+(i%columns)*310; y=45+(i//columns)*180
+        m.n('Item'+str(i),typ,label,x,y,definition=definition)
+        if 'Event' in typ or 'Gateway' in typ:
+            m.box('Item'+str(i))['kw']['label']=(x-65,y+65,180,55)
+    m.save()
+
+sheet('36-gateway-types','Врсте гранања',[
+ ('exclusiveGateway','XOR: једна грана',None),
+ ('parallelGateway','AND: све гране',None),
+ ('inclusiveGateway','OR: једна или више грана',None),
+ ('eventBasedGateway','Према догађају који први стигне',None),
+ ('complexGateway','Сложено правило спајања',None),
+])
+sheet('37-task-types','Врсте задатака',[
+ ('userTask','Кориснички: одобрити захтјев',None),
+ ('serviceTask','Сервисни: позвати сервис',None),
+ ('scriptTask','Скрипт: израчунати износ',None),
+])
+sheet('38-intermediate-types','Догађаји током процеса',[
+ ('intermediateCatchEvent','Порука: чека одређену поруку',('messageEventDefinition',{},'')),
+ ('intermediateCatchEvent','Тајмер: чека вријеме или рок',('timerEventDefinition',{},'PT1H')),
+ ('intermediateCatchEvent','Сигнал: чека општу објаву',('signalEventDefinition',{},'')),
+])
+sheet('39-start-end-types','Почетни догађаји',[
+ ('startEvent','Почетак без посебног окидача',None),
+ ('startEvent','Почетак пријемом поруке',('messageEventDefinition',{},'')),
+ ('startEvent','Почетак по распореду',('timerEventDefinition',{},'PT24H')),
+ ('startEvent','Почетак пријемом сигнала',('signalEventDefinition',{},'')),
+ ('startEvent','Условни почетак',('conditionalEventDefinition',{},'')),
+])
+# Same reminder example with a terminate end instead of a plain end.
+m=Model('40-terminate-reminder','Погрешан подсјетник: терминирајући крај')
+m.n('Start','startEvent','',25,82)
+m.n('Review','userTask','Одобрити набавку',180,62,220,100)
+m.n('Done','endEvent','',650,94)
+m.n('Timer','boundaryEvent','1 дан',272,144,attachedToRef='Review',cancelActivity='false',definition=('timerEventDefinition',{},'P1D'))
+m.box('Timer')['kw']['label']=(145,195,120,30)
+m.n('Handle','serviceTask','Послати подсјетник',350,315,200)
+m.n('HandlerEnd','endEvent','Прекида и одобравање',650,335,definition=('terminateEventDefinition',{},''))
+m.f('Start','Review','',[(61,100),(120,100),(120,112),(180,112)])
+m.f('Review','Done');m.f('Timer','Handle','',[(290,180),(290,353),(350,353)])
+m.f('Handle','HandlerEnd');m.save()
+
 (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 print(f'Generated {len(manifest)} editable BPMN models')
 

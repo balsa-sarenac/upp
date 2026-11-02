@@ -16,7 +16,6 @@ npm ci --prefix tools/bpmn
 ./tools/bpmn/node_modules/.bin/playwright install chromium
 python3 tools/bpmn/generate.py
 node tools/bpmn/render.mjs
-python3 tools/bpmn/slides.py
 make 2026-2027/vjezbe/class2/class2.html 2026-2027/vjezbe/class2/class2.pdf
 ```
 
@@ -31,9 +30,10 @@ to convert them for PDF output. The catalogue uses PNG previews.
 Regenerating the diagrams requires npm and Chromium; building the slides
 from the exported files does not require a browser.
 
-`generate.py` defines the BPMN elements and their layout. `slides.py`
-writes the presentation and student handout. Edit these source files
-when regenerating. To keep a direct Modeler edit, run only `render.mjs`:
+`generate.py` defines the BPMN elements and their layout. Edit the lesson
+Markdown and handout directly; `make preview` rebuilds the HTML on save.
+`slides.py` is the original draft generator and requires `--overwrite`
+to replace existing Markdown. To keep a direct Modeler edit, run only `render.mjs`:
 regenerating the XML overwrites edits made in Modeler.
 
 Run `node tools/bpmn/audit.mjs` to check image loading and slide overflow
@@ -71,3 +71,12 @@ regenerated. They are stored in
 
 Renderer: https://bpmn.io/toolkit/bpmn-js/
 License: https://bpmn.io/license
+
+Reference sheets 36–39 introduce gateway, task and event types. Model 40
+shows why a terminate end is wrong for a reminder. In solution B the
+article code is validated before checking availability; an invalid code
+interrupts any budget check still running in the same subprocess.
+
+Notifications, reminders and requests to correct an application are service
+tasks: the system calls a notification service. The intermediate-event
+reference sheet includes message, timer and signal catch events.

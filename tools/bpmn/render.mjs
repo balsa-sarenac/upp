@@ -116,7 +116,7 @@ const cataloguePath=path.join(dir,'README.md');
 let catalogue=(await fs.readFile(cataloguePath,'utf8')).split('\n<!-- derived views -->')[0];
 catalogue+='\n<!-- derived views -->\n## Tok izvršavanja i uvećani detalji\n\nPlavo označava samo rad koji sada traje. Završene aktivnosti, čekanje i posao koji još nije počeo označeni su riječima. Ostale strelice su neutralne. Boje služe objašnjenju i nisu dio BPMN notacije.\nPrikaz granice je izrez modela B; izlazni tokovi nastavljaju van izreza.\n\n';
 for(const v of views)catalogue+=`### ${v.title}\n\n![${v.title}](${v.name}.png)\n\n[SVG](${v.name}.svg) · [Izvorni model](${v.source}.bpmn)\n\n`;
-await fs.writeFile(cataloguePath,catalogue);
+await fs.writeFile(cataloguePath,catalogue.trimEnd()+'\n');
 await browser.close();
 await fs.writeFile(path.join(dir,'validation.json'),JSON.stringify({renderer:'bpmn-js 18.31.1',models:manifest.length,importWarnings:failures},null,2)+'\n');
 if(failures.length)process.exitCode=1;

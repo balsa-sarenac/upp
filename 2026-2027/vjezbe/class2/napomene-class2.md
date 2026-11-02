@@ -29,11 +29,11 @@ provjeravamo ponašanjem procesa; uredan crtež sam po sebi nije dovoljan.
 Dodatak sa dobavljačem ostaviti za pitanje ili naredni čas. Vrijeme za
 samostalan rad treba sačuvati i ako objašnjenje potraje. Danas crtamo
 modele bez podešavanja za izvršavanje. Forme, worker-i, deploy,
-event-based gateway i kompenzacija nisu dio ovog časa.
+event-based gateway se samo prepoznaje na pregledu vrsta; ne vježbamo ga. Kompenzacija nije dio časa.
 
 ## Materijali i rad u paru
 
-- [Prezentacija](class2.md) ima 24 glavna sadržajna slajda i jedan dodatak.
+- [Prezentacija](class2.md) ima 29 glavnih sadržajnih slajdova i jedan dodatak.
 - [Zadaci](zadatak-class2.md) sadrže A, B, provjere modela i završni zadatak, bez rješenja.
 - [Katalog dijagrama](bpmn-class2/README.md) sadrži i rješenja za analizu.
 
@@ -70,6 +70,11 @@ pokreće. XOR bira prema podatku koji već imamo. Uslovi treba da jasno
 pokriju slučajeve bez preklapanja. Cijeli model nabavke još ne pokazujemo;
 studenti će u A sami spojiti odluke sa ostalim koracima.
 
+![Spajanje alternativnih putanja](bpmn-class2/33-xor-merge.png)
+
+Kod XOR spajanja nastavljamo čim završi izabrana grana. Ne čeka se
+druga, koja nije ni pokrenuta. To je razlika u odnosu na AND spajanje.
+
 ## AND: rad, čekanje i nastavak
 
 ![Obje provjere rade](bpmn-class2/29-and-running.png)
@@ -84,17 +89,14 @@ Provjera budžeta je završena, a dostupnost se još provjerava. AND čeka
 drugu granu. Pitati može li zajednički zadatak već početi i tražiti
 objašnjenje na dijagramu.
 
-![Obje provjere su završene](bpmn-class2/35-and-joined.png)
-
-AND je sačekao obje provjere i pokrenuo sljedeći zadatak jednom.
-Navesti konkretan slučaj: roba je dostupna, ali novca nema. Obje provjere
-su završene i proces prolazi kroz AND, ali robu ne smijemo naručiti.
-U zadatku A studenti treba da dodaju odluku koja provjerava rezultate.
+Kada i druga provjera završi, zajednički zadatak počinje jednom.
+Razliku između završetka provjera i njihovih rezultata kratko objasniti
+na rješenju A: završena provjera može dati negativan odgovor.
 
 Plavo označava samo posao koji sada traje. Završetak, čekanje i posao
-koji nije počeo pišu uz aktivnosti i spajanje. Tri slike pokazuju
+koji nije počeo pišu uz aktivnosti i spajanje. Dvije slike pokazuju
 uzastopna stanja istog procesa. Boja i natpisi služe objašnjenju; nisu
-dio BPMN notacije i ne prikazuju živu simulaciju. Sve tri slike koriste isti izvorni model.
+dio BPMN notacije i ne prikazuju živu simulaciju. Obje slike koriste isti izvorni model.
 Prije grupnog odgovora tražiti kratko predviđanje od svakog studenta.
 
 ## Zadatak A
@@ -126,11 +128,6 @@ dostupnosti i čeka obje. XOR zatim čita rezultate. Dva pozitivna vode
 na naručivanje, a ostali na obavještenje. Donji dio dijagrama teče
 zdesna nalijevo. XOR prije obavještenja spaja alternativne ishode.
 
-![Spajanje alternativnih putanja](bpmn-class2/33-xor-merge.png)
-
-Kod XOR spajanja nastavljamo čim završi izabrana grana. Ne čeka se
-druga, koja nije ni pokrenuta. To je razlika u odnosu na AND spajanje.
-
 Prihvatiti i model u kom alternativni ulazi vode neposredno na isti
 zadatak. Taj zadatak ne bi sinhronizovao paralelne grane. Broj rombova
 ne mora biti isti kao u našem rješenju; provjeravamo da li model daje
@@ -153,6 +150,25 @@ Posljednja dva minuta ovog bloka ostaviti za ispravku. Svaki par treba
 da zabilježi bar jednu izmjenu ili objasni zašto njihov model već prolazi
 navedene slučajeve.
 
+## Kratki pregledi vrsta elemenata
+
+Pregledi su pomoć pri čitanju simbola, bez posebnih zadataka. XOR i AND
+vježbamo; OR, event-based i složeni gateway samo prepoznajemo. Ne
+objašnjavati njihovo spajanje na ovom času. Vrsta zadatka govori ko ili
+šta radi: korisnički kroz aplikaciju, servisni pozivom programa, skript
+izvršavanjem skripte, ručni van sistema, slanje i prijem poruke.
+
+Pomenuti da poruka, signal i tajmer imaju svoje početne događaje.
+Uslovni start je zasebna vrsta koja reaguje na ispunjen uslov.
+Međudogađaji imaju dvostruki obod. Poruka ima određenog primaoca,
+signal je objava pretplaćenim primaocima, a eskalacija prijavljuje slučaj
+višem nivou obrade. Ne uvoditi podešavanje za izvršavanje.
+
+Za ove preglede koristiti do četiri minuta ukupno. U bloku 3-13 ostaviti
+oko minut za vrste grananja; pregled zadataka pokazati pred A. U bloku
+36-48 dati dva minuta za početne i međudogađaje i minut za kraj; skratiti
+usmenu analizu već poznatih malih primjera. Vrijeme rada na A i B ostaje.
+
 ## Prije zadatka B
 
 ![Prekidni tajmer](bpmn-class2/23-interrupting.png)
@@ -169,13 +185,20 @@ Odobravanje ostaje aktivno. Običan end završava granu podsjetnika, dok
 rukovodilac i dalje može da odluči. Ovaj jednokratni tajmer ne ponavlja
 podsjetnik periodično.
 
+![Terminirajući kraj poslije podsjetnika](bpmn-class2/40-terminate-reminder.png)
+
+Uporediti sa prethodnim podsjetnikom. Običan kraj završava samo tu granu.
+Terminirajući kraj prekida sav aktivan rad u svom opsegu. U ovom primjeru
+bio bi pogrešan jer bi prekinuo i odobravanje. U potprocesu bi prekinuo
+rad tog potprocesa, ne automatski cijelu nadređenu nabavku.
+
 ![Potproces i greška](bpmn-class2/25-minimal-error.png)
 
 Ako je šifra ispravna, unutrašnji rad završava i proces nastavlja van
 potprocesa. Nevažeća šifra vodi na krajnji događaj greške (error end) sa oznakom
 NEVAZECI_ARTIKAL. Događaj sa istom oznakom na ivici potprocesa
 (error boundary) prekida preostali rad unutar okvira i pokreće
-obavještenje da treba poslati nov zahtjev. Na malom primjeru je jedna provjera. U B
+obavještenje da treba poslati nov zahtjev. Na malom primjeru je jedna provjera. Šifru uvijek provjeravamo prije dostupnosti. U B
 studenti treba da isti princip primijene na dvije provjere.
 
 Nedostatak budžeta ostaje očekivani negativan rezultat koji obrađuje
@@ -186,7 +209,7 @@ Tehničke kvarove i ponavljanja ostaviti za rad sa servisnim pozivima.
 ## Zadatak B
 
 Studenti mijenjaju ispravljen model A. Rješenje sa dva tajmera na
-potprocesu još ne vide. Nevažeća šifra treba da prekine preostale provjere i
+potprocesu još ne vide. U grani dostupnosti prvo se provjerava šifra, a tek zatim dostupnost. Nevažeća šifra treba da prekine provjeru budžeta ako još traje i
 zatraži nov zahtjev. Obični negativni rezultati i ostala pravila A ostaju.
 
 Rok od 48 časova počinje ulaskom u provjere. U 24. času šaljemo jedan
@@ -226,7 +249,7 @@ podsjetnik bez prekida, a PT48H prekida preostali rad.
 Potproces je ovdje sklopljen, a raspored promijenjen da se lakše prati
 normalan i ručni nastavak. Greška i podsjetnik postoje na cijelom modelu,
 ali nisu ponovljeni u ovom detalju. Oba prikazana puta vode na istu
-odluku o rezultatima. Ručni zadatak je van prekinutog potprocesa.
+odluku o rezultatima. Korisnički zadatak za ručnu provjeru je van prekinutog potprocesa.
 Prikazujemo drugi dio istog rješenja, ne novi poslovni primjer.
 
 Oba tajmera kreću ulaskom u potproces. Kada obje provjere završe, AND
@@ -367,3 +390,11 @@ nekoliko anonimnih tipičnih skica za osvrt.
 ## Arhiva
 
 [Verzije v1 do v4](archive/README.md) sačuvane su sa svojim dijagramima.
+
+## Izvori za vrste događaja
+
+- [BPMN simboli i primjeri](https://camunda.com/bpmn/reference/)
+- [Terminate end i opseg prekida](https://docs.camunda.io/docs/components/modeler/bpmn/terminate-events/)
+
+Pregledi opisuju BPMN notaciju. Podršku konkretne izvršne platforme
+provjeravamo na času implementacije.

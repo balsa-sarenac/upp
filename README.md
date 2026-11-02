@@ -33,3 +33,14 @@ Trenutno se koristi font [DejaVu Sans](https://dejavu-fonts.github.io/).
 
 Za SVG dijagrame u prezentaciji drugog časa potreban je i `rsvg-convert`
 (iz paketa librsvg) pri izgradnji PDF-a. HTML koristi izvorne SVG slike.
+
+## Uređivanje uz automatski pregled
+
+Pokrenite `make preview`. Pregled se otvara u pregledaču. Uređujte
+`2026-2027/vjezbe/class2/class2.md` u svom editoru i sačuvajte promjenu.
+HTML se obnavlja automatski, a pregled ostaje na istom slajdu.
+Za prvi čas koristite `make preview CLASS=class1`. Zaustavljanje: Ctrl+C.
+
+PDF izvezite kada završite: `make pdf`. Zadaci u `zadatak-class2.md`
+uređuju se zasebno. `tools/bpmn/slides.py` čuva prvobitni generator i
+ne prepisuje ručne izmjene bez izričite opcije `--overwrite`.

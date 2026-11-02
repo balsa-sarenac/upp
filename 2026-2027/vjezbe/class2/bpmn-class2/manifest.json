@@ -55,7 +55,7 @@
   },
   {
     "name": "12-error-active",
-    "title": "Сценарио: грешка у доступности, буџет још активан",
+    "title": "Сценарио: неважећа шифра, буџет још активан",
     "audience": "student",
     "fontSize": 16
   },
@@ -140,6 +140,36 @@
   {
     "name": "34-and-execution",
     "title": "Паралелне провјере и заједнички наставак",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "36-gateway-types",
+    "title": "Врсте гранања",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "37-task-types",
+    "title": "Врсте задатака",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "38-intermediate-types",
+    "title": "Догађаји током процеса",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "39-start-end-types",
+    "title": "Почетни догађаји",
+    "audience": "student",
+    "fontSize": 16
+  },
+  {
+    "name": "40-terminate-reminder",
+    "title": "Погрешан подсјетник: терминирајући крај",
     "audience": "student",
     "fontSize": 16
   }
