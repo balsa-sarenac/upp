@@ -294,13 +294,6 @@ XOR spajanje ne čeka drugu granu, pa nastavak može krenuti dvaput.
 Na primjer, budžet završi prvi i pokrene nastavak, a dostupnost završi
 kasnije i pokrene ga ponovo. Prvi nastavak je pritom krenuo prerano.
 
-![Tajmer na pogrešnom zadatku](bpmn-class2/26-wrong-timer-scope.png)
-
-Budžet završi za 20 časova i njegov tajmer više ne čeka. Dostupnost može
-trajati 60 časova, a ručna provjera neće početi. Rok zato mora pripadati
-zajedničkom potprocesu. Ako se prekine samo budžet, druga grana i čekanje
-na spajanju ostaju aktivni.
-
 Prije popravke svaki par treba da navede slučaj koji otkriva grešku.
 Zatim mijenja model i provjerava isti slučaj ponovo.
 
