@@ -189,6 +189,24 @@ Generisano pomoću [bpmn-js](https://bpmn.io/toolkit/bpmn-js/).
 Plavo označava samo rad koji sada traje. Završene aktivnosti, čekanje i posao koji još nije počeo označeni su riječima. Ostale strelice su neutralne. Boje služe objašnjenju i nisu dio BPMN notacije.
 Prikaz granice je izrez modela B; izlazni tokovi nastavljaju van izreza.
 
+### Припрема испоруке: дио којем треба додати рок
+
+![Припрема испоруке: дио којем треба додати рок](43-exercise-preparation.png)
+
+[SVG](43-exercise-preparation.svg) · [Izvorni model](28-exit-preparation.bpmn)
+
+### Дио рјешења A који проширујемо
+
+![Дио рјешења A који проширујемо](41-exercise-checks.png)
+
+[SVG](41-exercise-checks.svg) · [Izvorni model](17-base-overview.bpmn)
+
+### Провјере након додавања обраде грешке
+
+![Провјере након додавања обраде грешке](42-exercise-error.png)
+
+[SVG](42-exercise-error.svg) · [Izvorni model](11-error-scope.bpmn)
+
 ### Обје провјере раде
 
 ![Обје провјере раде](29-and-running.png)
