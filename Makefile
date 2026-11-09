@@ -8,12 +8,14 @@ PDF_ENGINE ?= xelatex
 SRC := $(filter-out %-v1.md %-v2.md %-v3.md %-v4.md,$(wildcard $(YEAR)/vjezbe/class*.md) $(wildcard $(YEAR)/vjezbe/class*/class*.md))
 HTML := $(SRC:.md=.html)
 PDF := $(SRC:.md=.pdf)
+# Student copies: same slides without the "Рјешење" slides.
+PDF_STUDENT := $(SRC:.md=-bez-rjesenja.pdf)
 COMMON_CSS = $(shell python3 -c 'import os; print(os.path.relpath("$(COMMON)/slides.css", "$(dir $@)"))')
 
 .PHONY: all html pdf clean
 all: html pdf
 html: $(HTML)
-pdf: $(PDF)
+pdf: $(PDF) $(PDF_STUDENT)
 
 %.html: %.md $(COMMON)/slides.css
 	pandoc $< -t revealjs -s -o $@ -V slideNumber=true --slide-level=2 \
@@ -23,18 +25,23 @@ pdf: $(PDF)
 	pandoc $< -t beamer -o $@ --pdf-engine=$(PDF_ENGINE) -V theme:metropolis \
 		--include-in-header=$(COMMON)/header.tex --resource-path=$(dir $<)
 
+%-bez-rjesenja.pdf: %.md $(COMMON)/header.tex $(COMMON)/bez-rjesenja.lua
+	pandoc $< -t beamer -o $@ --pdf-engine=$(PDF_ENGINE) -V theme:metropolis \
+		--include-in-header=$(COMMON)/header.tex --resource-path=$(dir $<) \
+		--lua-filter=$(COMMON)/bez-rjesenja.lua
+
 clean:
-	rm -f $(HTML) $(PDF)
+	rm -f $(HTML) $(PDF) $(PDF_STUDENT)
 
 CLASS2 := $(YEAR)/vjezbe/class2
-$(CLASS2)/class2.html $(CLASS2)/class2.pdf: $(wildcard $(CLASS2)/bpmn-class2/*.svg)
+$(CLASS2)/class2.html $(CLASS2)/class2.pdf $(CLASS2)/class2-bez-rjesenja.pdf: $(wildcard $(CLASS2)/bpmn-class2/*.svg)
 $(CLASS2)/class2.html: EXTRA_CSS = -c class2.css
 $(CLASS2)/class2.html: $(CLASS2)/class2.css
 
 CLASS3 := $(YEAR)/vjezbe/class3
 $(CLASS3)/class3.html: EXTRA_CSS = -c class3.css
 $(CLASS3)/class3.html: $(CLASS3)/class3.css
-$(CLASS3)/class3.html $(CLASS3)/class3.pdf: $(wildcard $(CLASS3)/bpmn-class3/*.svg)
+$(CLASS3)/class3.html $(CLASS3)/class3.pdf $(CLASS3)/class3-bez-rjesenja.pdf: $(wildcard $(CLASS3)/bpmn-class3/*.svg)
 
 # From 2027-2028 class 1 reuses class 2 diagrams, so it needs the same image styling.
 2027-2028/vjezbe/class1/class1.html: EXTRA_CSS = -c ../class2/class2.css
