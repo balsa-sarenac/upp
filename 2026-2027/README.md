@@ -31,7 +31,10 @@ Materijali su na Canvas-u.
 
 - [Prezentacija (HTML)](vjezbe/class2/class2.html) · [PDF](vjezbe/class2/class2.pdf)
 - [BPMN dijagrami i modeli za uređivanje](vjezbe/class2/bpmn-class2/README.md)
-- [Zadaci A i B i završna provjera](vjezbe/class2/zadatak-class2.md)
-
-- [Napomene za nastavnika](vjezbe/class2/napomene-class2.md)
 - [Arhiva prethodnih verzija](vjezbe/class2/archive/README.md)
+
+## Treći čas: nastavak BPMN-a i kontrolna tačka 1
+
+- [Prezentacija (HTML)](vjezbe/class3/class3.html) · [PDF](vjezbe/class3/class3.pdf)
+- [BPMN dijagrami i modeli za uređivanje](vjezbe/class3/bpmn-class3/README.md)
+- [Napomene za nastavnika](vjezbe/class3/napomene-class3.md)

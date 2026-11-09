@@ -35,12 +35,11 @@ sami → rješenje → koristi i granice.
 - Strelice idu direktno, bez obilaženja. Dvije strelice ne ulaze u isti task: spajaju se u XOR.
 - Kontrolna tačka: nekoliko manjih vježbi koje pokrivaju sve prethodne časove.
 
-**Struktura časa:** slajdovi, zadaci bez rješenja i napomene za
-nastavnika sa ishodima učenja i planom za 90 minuta.
+**Struktura časa:** slajdovi i napomene za nastavnika sa ishodima
+učenja, planom za 90 minuta i samoprovjerom. Zadaci su na slajdovima,
+bez posebnog fajla sa zadacima.
 
 **Šta nedostaje:**
 
 - Pisani kriterijumi za kontrolne tačke, krenuvši od onoga što studenti moraju znati da urade.
-- Ishod učenja i kratka samoprovjera na svakom času.
-- Prisjećanje prethodnog časa na početku.
-- Napomene za nastavnika za prvi čas.
+- Napomene za nastavnika za prvi i drugi čas.

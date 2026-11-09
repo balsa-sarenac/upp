@@ -22,3 +22,6 @@ opencodetmp/
 
 # Local BPMN rendering dependencies
 tools/bpmn/node_modules/
+
+# Local teacher notes, kept out of git
+2026-2027/vjezbe/class2/archive/napomene-class2.md

@@ -41,6 +41,5 @@ Pokrenite `make preview`. Pregled se otvara u pregledaču. Uređujte
 HTML se obnavlja automatski, a pregled ostaje na istom slajdu.
 Za prvi čas koristite `make preview CLASS=class1`. Zaustavljanje: Ctrl+C.
 
-PDF izvezite kada završite: `make pdf`. Zadaci u `zadatak-class2.md`
-uređuju se zasebno. `tools/bpmn/slides.py` čuva prvobitni generator i
+PDF izvezite kada završite: `make pdf`. `tools/bpmn/slides.py` čuva prvobitni generator i
 ne prepisuje ručne izmjene bez izričite opcije `--overwrite`.

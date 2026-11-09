@@ -7,6 +7,6 @@ Prethodne verzije materijala, sa pripadajućim dijagramima:
 - [V3](class2-v3.md) · [zadaci](zadatak-class2-v3.md) · [napomene](napomene-class2-v3.md)
 - [V4](class2-v4.md) · [HTML](class2-v4.html) · [PDF](class2-v4.pdf) · [zadaci](zadatak-class2-v4.md) · [napomene](napomene-class2-v4.md)
 
-[Tekuća prezentacija](../class2.html) · [tekući zadaci](../zadatak-class2.md)
+[Tekuća prezentacija](../class2.html)
 
 Arhivirane verzije se ne mijenjaju pri generisanju tekućih materijala.
