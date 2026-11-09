@@ -16,7 +16,7 @@ html: $(HTML)
 pdf: $(PDF)
 
 %.html: %.md $(COMMON)/slides.css
-	pandoc $< -t revealjs -s -o $@ -V slideNumber=true -V slideLevel=2 \
+	pandoc $< -t revealjs -s -o $@ -V slideNumber=true --slide-level=2 \
 		-c $(COMMON_CSS) $(EXTRA_CSS)
 
 %.pdf: %.md $(COMMON)/header.tex
