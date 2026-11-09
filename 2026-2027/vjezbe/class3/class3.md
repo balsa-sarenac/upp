@@ -2,18 +2,36 @@
 title: "BPMN: наставак"
 subtitle: "Управљање пословним процесима"
 lang: sr-Cyrl
+aspectratio: 169
+fontsize: 9pt
 ---
 
 ## 1. Претходни час: набавка робе
 
-![Рјешење B са прошлог часа](../class2/bpmn-class2/19-shared-deadline-solution.svg)
+```{=latex}
+{\centering
+```
+
+![](../class2/bpmn-class2/19-shared-deadline-solution.svg){height=80% aria-label="Рјешење B са прошлог часа"}
+
+```{=latex}
+\par}
+```
 
 ## 2. Поруке између учесника
 
 Комуникација између двије апликације. Пандан у коду: HTTP позив или ред порука, па чекање одговора.
 Са првог часа: message flow иде између pool-ова.
 
-![Упит за цијену: оба процеса](bpmn-class3/01-message-basics.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/01-message-basics.svg){height=55% aria-label="Упит за цијену: оба процеса"}
+
+```{=latex}
+\par}
+```
 
 ## Поруке: шта је ново
 
@@ -32,7 +50,15 @@ lang: sr-Cyrl
 
 ## Рјешење: поруке
 
-![Слање и пријем порука](bpmn-class3/02-messages.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/02-messages.svg){height=80% aria-label="Слање и пријем порука"}
+
+```{=latex}
+\par}
+```
 
 ## Шта ако...?
 
@@ -40,7 +66,15 @@ lang: sr-Cyrl
 
 ## 3. Чекање више догађаја
 
-![Event-based gateway](bpmn-class3/03-event-basics.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/03-event-basics.svg){height=55% aria-label="Event-based gateway"}
+
+```{=latex}
+\par}
+```
 
 - **Event-based gateway** чека; прати путању догађаја који стигне први.
 - Иза њега су догађаји чекања или receive task-ови.
@@ -54,7 +88,15 @@ lang: sr-Cyrl
 
 ## Рјешење: event-based gateway
 
-![Потврда, одбијање или рок](bpmn-class3/04-event-choice.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/04-event-choice.svg){height=80% aria-label="Потврда, одбијање или рок"}
+
+```{=latex}
+\par}
+```
 
 ## Шта ако...?
 
@@ -63,7 +105,15 @@ lang: sr-Cyrl
 
 ## 4. Више извршавања једног задатка
 
-![Један задатак, више извршавања](bpmn-class3/05-multi-markers.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/05-multi-markers.svg){height=55% aria-label="Један задатак, више извршавања"}
+
+```{=latex}
+\par}
+```
 
 - **|||**: сва извршавања одједном; **≡**: једно по једно.
 - Број извршавања одређује листа у тренутку покретања.
@@ -75,13 +125,29 @@ lang: sr-Cyrl
 
 ## Рјешење: multi-instance
 
-![Паралелни multi-instance](bpmn-class3/06-parallel-multi.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/06-parallel-multi.svg){height=80% aria-label="Паралелни multi-instance"}
+
+```{=latex}
+\par}
+```
 
 ## Шта ако...?
 
 Референт прегледа ставке ручно, једну по једну.
 
-![Секвенцијални multi-instance](bpmn-class3/07-sequential-multi.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/07-sequential-multi.svg){height=55% aria-label="Секвенцијални multi-instance"}
+
+```{=latex}
+\par}
+```
 
 ## Понављање
 
@@ -99,13 +165,29 @@ lang: sr-Cyrl
 
 ## Рјешење: понављање
 
-![Понављање до исправке](bpmn-class3/08-correction-loop.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/08-correction-loop.svg){height=80% aria-label="Понављање до исправке"}
+
+```{=latex}
+\par}
+```
 
 ## 5. Позив засебног процеса
 
 Пандан у коду: позив функције.
 
-![Задатак, потпроцес и call activity](bpmn-class3/09-reuse-kinds.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/09-reuse-kinds.svg){height=55% aria-label="Задатак, потпроцес и call activity"}
+
+```{=latex}
+\par}
+```
 
 - **Потпроцес** је дио истог модела.
 - **Call activity** (дебела ивица) позива засебан процес.
@@ -119,11 +201,27 @@ lang: sr-Cyrl
 
 ## Рјешење: call activity
 
-![Набавка позива провјеру добављача](bpmn-class3/10-call-activity.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/10-call-activity.svg){height=80% aria-label="Набавка позива провјеру добављача"}
+
+```{=latex}
+\par}
+```
 
 ## Позвани процес
 
-![Позвани процес: провјера добављача](bpmn-class3/11-called-process.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/11-called-process.svg){height=80% aria-label="Позвани процес: провјера добављача"}
+
+```{=latex}
+\par}
+```
 
 ## Шта ако...?
 
@@ -161,7 +259,15 @@ lang: sr-Cyrl
 
 ## Задатак 2: поврат робе
 
-![Поврат робе](bpmn-class3/12-checkpoint-return.svg)
+```{=latex}
+{\centering
+```
+
+![](bpmn-class3/12-checkpoint-return.svg){height=80% aria-label="Поврат робе"}
+
+```{=latex}
+\par}
+```
 
 ## Задатак 2: 
 
