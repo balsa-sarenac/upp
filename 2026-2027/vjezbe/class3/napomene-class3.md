@@ -1,7 +1,59 @@
 # Treći čas: BPMN, nastavak
 
 Svaka tema ide istim redom: pandan u kodu, mali primjer novog elementa,
-zadatak, rješenje i pitanja. Studenti pokušaju zadatak prije rješenja.
+zadatak, rješenje i pitanja. Ove godine zadatke sa slajdova studenti rade
+kao domaći i tako vježbaju za kontrolnu tačku. Na času pokazujemo primjer,
+kratko razgovaramo o zadatku i prolazimo rješenje.
+
+## Ishodi učenja
+
+Poslije časa student može da:
+
+1. Nacrta dva učesnika koji razmjenjuju poruke: send task, receive task,
+   message start event i message flow između pool-ova.
+2. Objasni kako poruka stiže baš onoj instanci procesa koja je čeka: po
+   broju (ID) koji poruka nosi.
+3. Izabere event-based gateway kada proces čeka jedan od više događaja, i
+   receive task sa tajmerom kada čeka samo jednu poruku i rok.
+4. Upotrijebi multi-instance kada broj ponavljanja zavisi od liste, i
+   izabere paralelno ili sekvencijalno izvršavanje.
+5. Nacrta petlju preko XOR-a, tako da povratak ne ulazi direktno u task.
+6. Razlikuje potproces od call activity-ja i kaže šta pozvani proces dobija,
+   a šta vraća.
+
+## Plan časa
+
+| Okvirno | Dio časa | Šta rade studenti |
+| --- | --- | --- |
+| 10 min | Prethodni čas: rješenje B | Prate jedan scenario na rješenju B |
+| 20 min | Poruke | Čitaju primjer upita za cijenu, zatim prolazimo zadatak i rješenje |
+| 15 min | Event-based gateway | Porede receive task sa tajmerom i event-based gateway |
+| 20 min | Multi-instance i petlja | Kažu zašto AND ne radi za listu; nalaze uslov za izlaz iz petlje |
+| 10 min | Call activity | Kažu šta provjera dobija i vraća |
+| 10 min | Priprema za kontrolnu tačku | Čitaju tekst servisa i povrata robe; pitanja o zahtjevima |
+| 5 min | Samoprovjera | Svako sam odgovara na tri pitanja |
+
+Vrijeme je okvirno. Ako tema potraje, skratiti zadatke na času jer su
+ionako domaći. Pripremu za kontrolnu tačku ne preskakati: studenti treba da
+razumiju zadatke prije nego ih rade kod kuće.
+
+## Samoprovjera na kraju časa
+
+Svako sam, bez gledanja slajdova, za dva do tri minuta:
+
+1. Dobavljač šalje „Potvrdu” ili „Odbijanje”, a rok je dva dana. Koji
+   element čeka i zašto ne receive task?
+2. Narudžbina ima od jedne do dvadeset stavki. Kako modelujete provjeru
+   svake stavke?
+3. U petlji dvije strelice ulaze u isti task. Šta mijenjate?
+
+Odgovori: event-based gateway sa dvije poruke i tajmerom, jer receive task
+čeka samo jednu vrstu poruke. Jedan task sa multi-instance oznakom, jer
+broj stavki ne znamo unaprijed. Ispred taska dodajemo XOR koji spaja obje
+strelice.
+
+Ko griješi u prvom pitanju, ponoviti poruke i event-based gateway prije
+kontrolne tačke. Ko griješi u drugom ili trećem, uputiti na domaći.
 
 ## Odgovori na pitanja sa slajdova
 
@@ -37,7 +89,8 @@ zadatak, rješenje i pitanja. Studenti pokušaju zadatak prije rješenja.
 
 ## Kontrolna tačka 1
 
-Dva zadatka na novim primjerima, ne na nabavci. Studenti rade sami.
+Dva zadatka na novim primjerima, ne na nabavci. Ove godine su domaći za
+vježbu prije kontrolne tačke.
 
 ### Zadatak 1: šta provjeravamo
 
