@@ -31,6 +31,11 @@ $(CLASS2)/class2.html $(CLASS2)/class2.pdf: $(wildcard $(CLASS2)/bpmn-class2/*.s
 $(CLASS2)/class2.html: EXTRA_CSS = -c class2.css
 $(CLASS2)/class2.html: $(CLASS2)/class2.css
 
+CLASS3 := 2026-2027/vjezbe/class3
+$(CLASS3)/class3.html: EXTRA_CSS = -c class3.css
+$(CLASS3)/class3.html: $(CLASS3)/class3.css
+$(CLASS3)/class3.html $(CLASS3)/class3.pdf: $(wildcard $(CLASS3)/bpmn-class3/*.svg)
+
 # Archived drafts are built only when explicitly requested.
 ARCHIVE := $(CLASS2)/archive
 $(ARCHIVE)/class2-v1.html $(ARCHIVE)/class2-v2.html: EXTRA_CSS = -c class2.css
