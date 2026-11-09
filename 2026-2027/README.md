@@ -6,11 +6,13 @@ Potreban softver: [Camunda 8](https://docs.camunda.io/)
 
 Okviran raspored po sedmicama:
 
+Četiri provjere znanja tokom nastave. Tema i termin četvrte provjere još nisu određeni.
+
 | Sedmica | Tema i rad na času | Provjera |
 | --- | --- | --- |
 | 1 | BPMN: učesnici, saradnja i tokovi poruka | |
 | 2 | Grananja, paralelizam, događaji, potprocesi i izuzeci | |
-| 3 | Utvrđivanje modelovanja; forme i promjenljive ako ostane vremena | Kontrolna tačka 1: modelovanje |
+| 3 | Utvrđivanje modelovanja i samostalna provjera | Kontrolna tačka 1: modelovanje |
 | 4 | Camunda: forme, promjenljive i ljudski zadaci | |
 | 5 | Servisna integracija i izvršavanje malog procesa | Kontrolna tačka 2: izvršavanje |
 | 6 | Upotreba AI u razvoju: generisanje i pregled modela, nedostajući zahtjevi i greške | |
