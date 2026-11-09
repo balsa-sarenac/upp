@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>BPMN: наставак</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../../../common/slides.css"/>
+  <link rel="stylesheet" href="class3.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">BPMN: наставак</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="претходни-час-набавка-робе" class="slide level2">
+<h2>1. Претходни час: набавка робе</h2>
+<p><img data-src="../class2/bpmn-class2/19-shared-deadline-solution.svg"
+style="height:80.0%" aria-label="Рјешење B са прошлог часа" /></p>
+</section>
+<section id="поруке-између-учесника" class="slide level2">
+<h2>2. Поруке између учесника</h2>
+<p>Комуникација између двије апликације. Пандан у коду: HTTP позив или
+ред порука, па чекање одговора. Са првог часа: message flow иде између
+pool-ова.</p>
+<p><img data-src="bpmn-class3/01-message-basics.svg"
+style="height:55.0%" aria-label="Упит за цијену: оба процеса" /></p>
+</section>
+<section id="поруке-шта-је-ново" class="slide level2">
+<h2>Поруке: шта је ново</h2>
+<ul>
+<li><strong>Send task</strong> шаље поруку, <strong>receive
+task</strong> чека поруку.</li>
+<li><strong>Message start event</strong>: порука покреће процес другог
+учесника.</li>
+<li>Порука носи број упита. По том броју одговор стиже баш оном купцу
+који га чека.</li>
+</ul>
+</section>
+<section id="задатак-наруџбина-добављачу" class="slide level2">
+<h2>Задатак: наруџбина добављачу</h2>
+<p>Набавка шаље наруџбину добављачу. Добављач је обради и одговори:
+прихваћено или одбијено. Ако одговор не стигне за два дана, набавка
+обавјештава запосленог.</p>
+<ul>
+<li>Учесници: <strong>Набавка</strong> и <strong>Добављач</strong>,
+сваки у свом pool-у.</li>
+<li>Нацртајте оба процеса и повежите их порукама.</li>
+<li>Који податак у поруци повезује одговор са наруџбином?</li>
+</ul>
+</section>
+<section id="рјешење-поруке" class="slide level2">
+<h2>Рјешење: поруке</h2>
+<p><img data-src="bpmn-class3/02-messages.svg" style="height:80.0%"
+aria-label="Слање и пријем порука" /></p>
+</section>
+<section id="шта-ако" class="slide level2">
+<h2>Шта ако…?</h2>
+<ul>
+<li>Добављач одговори послије три дана. Шта се деси са поруком?</li>
+</ul>
+</section>
+<section id="чекање-више-догађаја" class="slide level2">
+<h2>3. Чекање више догађаја</h2>
+<p><img data-src="bpmn-class3/03-event-basics.svg" style="height:55.0%"
+aria-label="Event-based gateway" /></p>
+<ul>
+<li><strong>Event-based gateway</strong> чека; прати путању догађаја
+који стигне први.</li>
+<li>Иза њега су догађаји чекања или receive task-ови.</li>
+</ul>
+</section>
+<section id="задатак-одговор-или-рок" class="slide level2">
+<h2>Задатак: одговор или рок</h2>
+<p>Добављач сада шаље једну од двије различите поруке:
+<strong>Потврда</strong> или <strong>Одбијање</strong>. Ако за два дана
+не стигне ниједна, набавка обавјештава запосленог.</p>
+<ul>
+<li>Нацртајте дио набавке од слања наруџбине до краја.</li>
+</ul>
+</section>
+<section id="рјешење-event-based-gateway" class="slide level2">
+<h2>Рјешење: event-based gateway</h2>
+<p><img data-src="bpmn-class3/04-event-choice.svg" style="height:80.0%"
+aria-label="Потврда, одбијање или рок" /></p>
+</section>
+<section id="шта-ако-1" class="slide level2">
+<h2>Шта ако…?</h2>
+<ul>
+<li>Добављач може послати и поруку „Одложено”. Гдје је додајете?</li>
+<li>Када је receive task са тајмером довољан?</li>
+</ul>
+</section>
+<section id="више-извршавања-једног-задатка" class="slide level2">
+<h2>4. Више извршавања једног задатка</h2>
+<p><img data-src="bpmn-class3/05-multi-markers.svg" style="height:55.0%"
+aria-label="Један задатак, више извршавања" /></p>
+<ul>
+<li><strong>|||</strong>: сва извршавања одједном; <strong>≡</strong>:
+једно по једно.</li>
+<li>Број извршавања одређује листа у тренутку покретања.</li>
+</ul>
+</section>
+<section id="задатак-ставке-наруџбине" class="slide level2">
+<h2>Задатак: ставке наруџбине</h2>
+<p>Наруџбина има од једне до двадесет ставки. Систем провјерава сваку
+ставку посебно. Ако су све ставке у реду, шаљемо наруџбину. Иначе
+обавјештавамо запосленог.</p>
+</section>
+<section id="рјешење-multi-instance" class="slide level2">
+<h2>Рјешење: multi-instance</h2>
+<p><img data-src="bpmn-class3/06-parallel-multi.svg"
+style="height:80.0%" aria-label="Паралелни multi-instance" /></p>
+</section>
+<section id="шта-ако-2" class="slide level2">
+<h2>Шта ако…?</h2>
+<p>Референт прегледа ставке ручно, једну по једну.</p>
+<p><img data-src="bpmn-class3/07-sequential-multi.svg"
+style="height:55.0%" aria-label="Секвенцијални multi-instance" /></p>
+</section>
+<section id="контролна-тачка-1" class="slide level2">
+<h2>5. Контролна тачка 1</h2>
+<p><strong>Задатак 1: сервис лаптопа</strong></p>
+<p>Купац пријављује квар лаптопа сервису. Учесници: Купац и Сервис. У
+сервису су lane-ови Пријем и Техничар.</p>
+<ul>
+<li>Пријем паралелно провјерава гаранцију и доступност дијелова. Понуда
+иде тек кад заврше обје провјере.</li>
+<li>Ако серијски број не постоји у евиденцији, прекидају се обје
+провјере и пријем тражи од купца исправан број.</li>
+<li>Техничар уради дијагностику, а пријем купцу пошаље понуду са
+цијеном.</li>
+<li>Купац прихвати или одбије понуду. Ако одбије или не одговори за три
+дана, лаптоп враћамо.</li>
+</ul>
+</section>
+<section id="задатак-1-наставак" class="slide level2">
+<h2>Задатак 1: наставак</h2>
+<ul>
+<li>За сваки неисправан дио техничар замијени дио и тестира га.</li>
+<li>Затим техничар ради контролу квалитета. Ако контрола не прође,
+поправка се понавља.</li>
+<li>Ако поправка траје дуже од пет дана, купац добија обавјештење, а
+поправка се наставља.</li>
+<li>Ако траје дуже од десет дана, поправка се прекида и купац добија
+замјенски лаптоп.</li>
+<li>На крају пријем обавјештава купца да је лаптоп спреман.</li>
+</ul>
+</section>
+<section id="провјерите-свој-модел" class="slide level2">
+<h2>Провјерите свој модел</h2>
+<p>Пратите на свом моделу:</p>
+<ol type="1">
+<li>Серијски број не постоји, а провјера гаранције још траје.</li>
+<li>Купац не одговори за три дана.</li>
+<li>Два дијела су неисправна, контрола једном не прође, а други пут
+прође.</li>
+<li>Поправка траје седам дана; поправка траје дванаест дана.</li>
+</ol>
+<p>Шта се прекида, а шта наставља? Који дио процеса обухвата ваш
+рок?</p>
+</section>
+<section id="задатак-2-поврат-робе" class="slide level2">
+<h2>Задатак 2: поврат робе</h2>
+<p><img data-src="bpmn-class3/12-checkpoint-return.svg"
+style="height:80.0%" aria-label="Поврат робе" /></p>
+</section>
+<section id="задатак-2-питања" class="slide level2">
+<h2>Задатак 2: питања</h2>
+<p>Опишите процес по корацима</p>
+</section>
+<section id="завршни-осврт" class="slide level2">
+<h2>6. Завршни осврт</h2>
+<p>На моделу означити гдје се уносе подаци и који подаци су потребни за
+одлуке.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^6/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

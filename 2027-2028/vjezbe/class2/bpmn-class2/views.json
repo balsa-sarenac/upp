@@ -1,0 +1,234 @@
+[
+  {
+    "name": "43-exercise-preparation",
+    "source": "28-exit-preparation",
+    "title": "Припрема испоруке: дио којем треба додати рок",
+    "bounds": [
+      100,
+      25,
+      550,
+      330
+    ],
+    "keep": [
+      "Fork",
+      "Budget",
+      "Stock",
+      "Join"
+    ],
+    "flowSources": [
+      "Start",
+      "Fork",
+      "Budget",
+      "Stock",
+      "Join"
+    ]
+  },
+  {
+    "name": "41-exercise-checks",
+    "source": "17-base-overview",
+    "title": "Дио рјешења A који проширујемо",
+    "bounds": [
+      650,
+      20,
+      475,
+      390
+    ],
+    "keep": [
+      "Fork",
+      "Budget",
+      "Stock",
+      "Join"
+    ],
+    "flowSources": [
+      "Merge",
+      "Fork",
+      "Budget",
+      "Stock",
+      "Join"
+    ]
+  },
+  {
+    "name": "42-exercise-error",
+    "source": "11-error-scope",
+    "title": "Провјере након додавања обраде грешке",
+    "bounds": [
+      100,
+      20,
+      1010,
+      550
+    ],
+    "keep": [
+      "Sub",
+      "InnerStart",
+      "Fork",
+      "Budget",
+      "Code",
+      "Stock",
+      "Valid",
+      "Join",
+      "InnerEnd",
+      "Error",
+      "Catch",
+      "Notify",
+      "InvalidEnd",
+      "Next"
+    ],
+    "flowSources": [
+      "Sub",
+      "InnerStart",
+      "Fork",
+      "Budget",
+      "Code",
+      "Valid",
+      "Stock",
+      "Join",
+      "Catch",
+      "Notify"
+    ]
+  },
+  {
+    "name": "29-and-running",
+    "source": "34-and-execution",
+    "title": "Обје провјере раде",
+    "activeEdges": [
+      "Fork:Budget",
+      "Fork:Stock"
+    ],
+    "activeNodes": [
+      "Budget",
+      "Stock"
+    ],
+    "futureEdges": [
+      "Join:Next",
+      "Next:End"
+    ],
+    "futureNodes": [
+      "Next"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "У току"
+      ],
+      [
+        "Stock",
+        "У току"
+      ],
+      [
+        "Next",
+        "Није почело"
+      ]
+    ]
+  },
+  {
+    "name": "30-and-waiting",
+    "source": "34-and-execution",
+    "title": "Буџет је провјерен, чека се доступност",
+    "doneEdges": [
+      "Fork:Budget",
+      "Budget:Join"
+    ],
+    "doneNodes": [
+      "Budget"
+    ],
+    "activeEdges": [
+      "Fork:Stock"
+    ],
+    "activeNodes": [
+      "Stock"
+    ],
+    "waitingNodes": [
+      "Join"
+    ],
+    "futureEdges": [
+      "Join:Next",
+      "Next:End"
+    ],
+    "futureNodes": [
+      "Next"
+    ],
+    "joinLabel": [
+      "Чека",
+      "доступност"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "Завршено"
+      ],
+      [
+        "Stock",
+        "У току"
+      ],
+      [
+        "Next",
+        "Није почело"
+      ]
+    ]
+  },
+  {
+    "name": "35-and-joined",
+    "source": "34-and-execution",
+    "title": "Обје провјере су завршене, процес наставља",
+    "doneEdges": [
+      "Fork:Budget",
+      "Fork:Stock",
+      "Budget:Join",
+      "Stock:Join"
+    ],
+    "doneNodes": [
+      "Budget",
+      "Stock",
+      "Join"
+    ],
+    "activeEdges": [
+      "Join:Next"
+    ],
+    "activeNodes": [
+      "Next"
+    ],
+    "futureEdges": [
+      "Next:End"
+    ],
+    "joinLabel": [
+      "Обје",
+      "завршене"
+    ],
+    "statuses": [
+      [
+        "Budget",
+        "Завршено"
+      ],
+      [
+        "Stock",
+        "Завршено"
+      ],
+      [
+        "Next",
+        "У току"
+      ]
+    ]
+  },
+  {
+    "name": "31-boundary-detail",
+    "source": "19-shared-deadline-solution",
+    "title": "Три догађаја на граници потпроцеса",
+    "bounds": [
+      55,
+      380,
+      710,
+      200
+    ],
+    "keep": [
+      "Sub",
+      "Catch",
+      "Reminder",
+      "Deadline"
+    ],
+    "flowSources": [
+      "Catch",
+      "Reminder",
+      "Deadline"
+    ]
+  }
+]

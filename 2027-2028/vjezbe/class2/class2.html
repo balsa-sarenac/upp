@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="sr-Cyrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>BPMN</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^6/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="../../../common/slides.css"/>
+  <link rel="stylesheet" href="class2.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">BPMN</h1>
+  <p class="subtitle">Управљање пословним процесима</p>
+</section>
+
+<section id="претходни-час-набавка-робе" class="slide level2">
+<h2>Претходни час: набавка робе</h2>
+<p><img data-src="bpmn-class2/17-base-overview.svg" class="overview"
+style="height:84.0%" aria-label="Рјешење A са прошлог часа" /></p>
+</section>
+<section id="основни-задаци" class="slide level2">
+<h2>Основни задаци</h2>
+<p><img data-src="bpmn-class2/37-task-types.svg" class="compact"
+style="height:48.0%" aria-label="Ко обавља задатак?" /></p>
+<p>Кориснички задатак обавља човјек кроз апликацију, нпр. одобрава
+захтјев. Сервисни позива сервис, нпр. провјерава доступност робе. Скрипт
+задатак извршава скрипту, нпр. израчунава укупан износ.</p>
+<p>Тежимо аутоматизацији - шта год можемо да урадимо умјесто корисника -
+аутоматизујемо.</p>
+</section>
+<section id="start-events" class="slide level2">
+<h2>Start events</h2>
+<p><img data-src="bpmn-class2/39-start-end-types.svg" class="compact"
+style="height:48.0%" aria-label="Шта може да покрене процес?" /></p>
+<p>Порука покреће процес на основу примљеног захтјева. Тајмер га покреће
+у задато вријеме, а сигнал када стигне објава на коју је процес
+претплаћен. Условни почетак реагује када је услов испуњен, нпр. залиха
+падне испод минимума.</p>
+</section>
+<section id="догађаји-током-трајања-процеса" class="slide level2">
+<h2>Догађаји током трајања процеса</h2>
+<p><img data-src="bpmn-class2/38-intermediate-types.svg" class="compact"
+style="height:48.0%" aria-label="Догађаји током процеса" /></p>
+<p>Двоструки круг означава међудогађај. Порука је намијењена одређеном
+примаоцу. Сигнал је објава за све који га чекају. Тајмер означава
+вријеме или рок.</p>
+<p>Разликујемо догађаје чекања (catch event) и слања (throw event). На
+слици су догађаји чекања. Код слања поруке или сигнала унутрашња иконица
+је попуњена црном бојом. Тајмер постоји само као догађај чекања.</p>
+</section>
+<section id="interrupting-timer" class="slide level2">
+<h2>Interrupting timer</h2>
+<p><img data-src="bpmn-class2/23-interrupting.svg" style="height:65.0%"
+aria-label="Прекидни тајмер" /></p>
+<p>Ако руководилац не заврши одобравање за два дана, тајмер прекида
+задатак.</p>
+</section>
+<section id="non-interrupting-timer" class="slide level2">
+<h2>Non-Interrupting timer</h2>
+<p><img data-src="bpmn-class2/24-noninterrupting.svg"
+style="height:65.0%"
+aria-label="Подсјетник оставља задатак активним" /></p>
+<p>Ако руководилац још није одлучио након једног дана, шаљемо
+подсјетник.</p>
+<p>Када се подсјетник пошаље, његова грана је готова. Процес и даље чека
+одлуку руководиоца.</p>
+</section>
+<section id="обичан-и-терминирајући-крај" class="slide level2">
+<h2>Обичан и терминирајући крај</h2>
+<p><img data-src="bpmn-class2/40-terminate-reminder.svg" class="compact"
+style="height:48.0%" aria-label="Обичан и терминирајући крај" /></p>
+<p>Обичан крај завршава само грану која је до њега стигла. Попуњен круг
+је терминирајући крај: зауставља сав рад у истом процесу или потпроцесу
+у којем се налази.</p>
+<p>Процес је готов када више нема активног рада ни чекања догађаја.</p>
+</section>
+<section id="потпроцес-и-грешка" class="slide level2">
+<h2>Потпроцес и грешка</h2>
+<p><img data-src="bpmn-class2/25-minimal-error.svg" style="height:65.0%"
+aria-label="Потпроцес и грешка" /></p>
+<p>Неисправна шифра води на крајњи догађај грешке (error end). Догађај
+грешке на граници потпроцеса (boundary event) прекида извршавање
+потпроцеса и покреће сервисни задатак за обавјештавање.</p>
+</section>
+<section id="задатак" class="slide level2">
+<h2>Задатак</h2>
+<p><img data-src="bpmn-class2/41-exercise-checks.svg" class="compact"
+style="height:48.0%"
+aria-label="Дио рјешења A: паралелне провјере које проширујемо" /></p>
+<p>Приказан је дио модела набавке са двије провјере. Додајте провјеру
+шифре артикла. У грани за доступност прво провјерите шифру артикла тако
+да се доступност провјерава само за исправну шифру. Ако шифра није
+исправна, прекините и провјеру буџета ако још траје. Обавијестите
+запосленог да пошаље нов захтјев са исправљеном шифром.</p>
+</section>
+<section id="задатак-наставак" class="slide level2">
+<h2>Задатак наставак</h2>
+<p>Рок од 48 часова почиње када почну провјере. Ако послије 24 часа још
+нису обје завршене, шаљемо један подсјетник, без прекида рада. Ако ни до
+48. часа нису обје завршене, прекидамо оне које још трају. Тада човјек
+ручно провјерава буџет и доступност. На основу тих резултата одлучујемо
+да ли наручити робу.</p>
+</section>
+<section id="рјешење" class="slide level2">
+<h2>Рјешење</h2>
+<p><img data-src="bpmn-class2/19-shared-deadline-solution.svg"
+class="overview" style="height:74.0%"
+aria-label="Рјешење B: измијењени дио процеса" /></p>
+<p>Одобравање руководиоца остаје од раније.</p>
+</section>
+<section id="три-догађаја-на-граници-потпроцеса" class="slide level2">
+<h2>Три догађаја на граници потпроцеса</h2>
+<p><img data-src="bpmn-class2/31-boundary-detail.svg"
+style="height:65.0%"
+aria-label="Три догађаја на граници потпроцеса" /></p>
+<ul>
+<li>Грешка прекида извршавање потпроцеса.</li>
+<li>Подсјетник се шаље, а потпроцес наставља са извршавањем.</li>
+<li>Рок прекида извршавање.</li>
+</ul>
+</section>
+<section id="провјерите-свој-модел" class="slide level2">
+<h2>Провјерите свој модел</h2>
+<p>Провјера буџета је завршена, али провјера доступности још траје када
+истекне 48 часова. При ручној провјери утврђено је да је роба доступна,
+али новца нема.</p>
+<p>Покажите којим путем пролази ваш модел. Који рад се прекида? Да ли се
+роба наручује и које обавјештење добија запослени?</p>
+</section>
+<section id="понављање" class="slide level2">
+<h2>Понављање</h2>
+<p>У коду: <code>while</code>. У BPMN: XOR који враћа процес назад.</p>
+<ul>
+<li>Повратна путања улази у XOR, не директно у задатак.</li>
+<li>Петља мора имати услов за излаз: овдје „Потпуна? да”.</li>
+</ul>
+</section>
+<section id="задатак-допуна-наруџбине" class="slide level2">
+<h2>Задатак: допуна наруџбине</h2>
+<p>Референт припреми наруџбину, а руководилац је прегледа. Ако није
+потпуна, референт је допуни и руководилац је поново прегледа, док не
+буде потпуна.</p>
+<ul>
+<li>Сваку улогу нацртајте у свом lane-у.</li>
+</ul>
+</section>
+<section id="рјешење-понављање" class="slide level2">
+<h2>Рјешење: понављање</h2>
+<p><img data-src="../class3/bpmn-class3/08-correction-loop.svg"
+style="height:80.0%" aria-label="Понављање до исправке" /></p>
+</section>
+<section id="позив-засебног-процеса" class="slide level2">
+<h2>Позив засебног процеса</h2>
+<p>Пандан у коду: позив функције.</p>
+<p><img data-src="../class3/bpmn-class3/09-reuse-kinds.svg"
+style="height:55.0%"
+aria-label="Задатак, потпроцес и call activity" /></p>
+<ul>
+<li><strong>Потпроцес</strong> је дио истог модела.</li>
+<li><strong>Call activity</strong> (дебела ивица) позива засебан
+процес.</li>
+</ul>
+</section>
+<section id="задатак-провјера-добављача" class="slide level2">
+<h2>Задатак: провјера добављача</h2>
+<p>Прије наруџбине провјеравамо добављача: регистар и дугове паралелно,
+затим референт даје оцјену. Провјеру моделујемо као засебан процес, а
+набавка га позива.</p>
+<ul>
+<li>Шта провјера добија, а шта враћа?</li>
+</ul>
+</section>
+<section id="рјешење-call-activity" class="slide level2">
+<h2>Рјешење: call activity</h2>
+<p><img data-src="../class3/bpmn-class3/10-call-activity.svg"
+style="height:80.0%"
+aria-label="Набавка позива провјеру добављача" /></p>
+</section>
+<section id="позвани-процес" class="slide level2">
+<h2>Позвани процес</h2>
+<p><img data-src="../class3/bpmn-class3/11-called-process.svg"
+style="height:80.0%"
+aria-label="Позвани процес: провјера добављача" /></p>
+</section>
+<section id="шта-ако" class="slide level2">
+<h2>Шта ако…?</h2>
+<ul>
+<li>Провјера траје дуже него набавка смије да чека. Гдје стављате
+рок?</li>
+</ul>
+</section>
+<section id="задатак-ко-обавља-који-посао" class="slide level2">
+<h2>Задатак: ко обавља који посао?</h2>
+<p>У свој модел набавке додајте pool „Набавка робе” и lane-ове за
+руководиоца, систем и запосленог који обавља ручну провјеру.</p>
+<p>Распоредите активности према томе ко их обавља. Систем провјерава
+шифру, буџет и доступност, наручује робу и шаље обавјештења. Руководилац
+одобрава набавку, а запослени ручно провјерава буџет и доступност када
+истекне рок.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^6/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^6/dist/plugin/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

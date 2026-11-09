@@ -1,0 +1,62 @@
+[
+  {
+    "name": "01-message-basics",
+    "title": "Упит за цијену: оба процеса",
+    "fontSize": 16
+  },
+  {
+    "name": "02-messages",
+    "title": "Слање наруџбине и пријем одговора",
+    "fontSize": 16
+  },
+  {
+    "name": "04-event-choice",
+    "title": "Потврда, одбијање или истек рока",
+    "fontSize": 16
+  },
+  {
+    "name": "03-event-basics",
+    "title": "Event-based gateway: први догађај бира путању",
+    "fontSize": 16
+  },
+  {
+    "name": "05-multi-markers",
+    "title": "Један задатак, више извршавања",
+    "fontSize": 16
+  },
+  {
+    "name": "06-parallel-multi",
+    "title": "Паралелно: свака ставка наруџбине",
+    "fontSize": 16
+  },
+  {
+    "name": "07-sequential-multi",
+    "title": "Редом: референт прегледа ставку по ставку",
+    "fontSize": 16
+  },
+  {
+    "name": "08-correction-loop",
+    "title": "Понављање до потпуне наруџбине",
+    "fontSize": 16
+  },
+  {
+    "name": "09-reuse-kinds",
+    "title": "Задатак, потпроцес и call activity",
+    "fontSize": 16
+  },
+  {
+    "name": "10-call-activity",
+    "title": "Набавка позива провјеру добављача",
+    "fontSize": 16
+  },
+  {
+    "name": "11-called-process",
+    "title": "Позвани процес: провјера добављача",
+    "fontSize": 16
+  },
+  {
+    "name": "12-checkpoint-return",
+    "title": "Поврат робе",
+    "fontSize": 16
+  }
+]
