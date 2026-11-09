@@ -26,15 +26,19 @@ pdf: $(PDF)
 clean:
 	rm -f $(HTML) $(PDF)
 
-CLASS2 := 2026-2027/vjezbe/class2
+CLASS2 := $(YEAR)/vjezbe/class2
 $(CLASS2)/class2.html $(CLASS2)/class2.pdf: $(wildcard $(CLASS2)/bpmn-class2/*.svg)
 $(CLASS2)/class2.html: EXTRA_CSS = -c class2.css
 $(CLASS2)/class2.html: $(CLASS2)/class2.css
 
-CLASS3 := 2026-2027/vjezbe/class3
+CLASS3 := $(YEAR)/vjezbe/class3
 $(CLASS3)/class3.html: EXTRA_CSS = -c class3.css
 $(CLASS3)/class3.html: $(CLASS3)/class3.css
 $(CLASS3)/class3.html $(CLASS3)/class3.pdf: $(wildcard $(CLASS3)/bpmn-class3/*.svg)
+
+# From 2027-2028 class 1 reuses class 2 diagrams, so it needs the same image styling.
+2027-2028/vjezbe/class1/class1.html: EXTRA_CSS = -c ../class2/class2.css
+2027-2028/vjezbe/class1/class1.html: 2027-2028/vjezbe/class2/class2.css
 
 # Archived drafts are built only when explicitly requested.
 ARCHIVE := $(CLASS2)/archive
