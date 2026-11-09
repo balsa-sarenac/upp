@@ -235,11 +235,9 @@ m.flow('Check','Decision');m.flow('Decision','End','да')
 m.flow('Decision','Fix','не',[(825,265),(825,110),(760,110)])
 m.flow('Fix','Merge',points=[(580,110),(470,110)]);m.save()
 
-m=Draft('09-reuse-kinds','Задатак, потпроцес и call activity')
+m=Draft('09-reuse-kinds','Задатак и call activity')
 m.node('Task','task','Задатак',40,40,w=200)
-m.node('Sub','subProcess','Потпроцес: дио овог модела',280,40,w=200,h=80)
-next(e for e in m.plane if e.get('id')=='Sub_di').set('isExpanded','false')
-m.node('Call','callActivity','Call activity: засебан процес',520,40,w=200,calledElement='Other')
+m.node('Call','callActivity','Call activity: засебан процес',280,40,w=200,calledElement='Other')
 m.save()
 
 # The caller sees one activity; the called process is a separate model in the same module.
