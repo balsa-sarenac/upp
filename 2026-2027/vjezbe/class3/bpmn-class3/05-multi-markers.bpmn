@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions" targetNamespace="https://upp.example/class3">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:task id="Task0" name="Једном" />
+    <bpmn:task id="Task1" name="За сваку ставку, паралелно">
+      <bpmn:multiInstanceLoopCharacteristics isSequential="false" />
+    </bpmn:task>
+    <bpmn:task id="Task2" name="За сваку ставку, редом">
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" />
+    </bpmn:task>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Process">
+      <bpmndi:BPMNShape id="Task0_di" bpmnElement="Task0">
+        <dc:Bounds x="40" y="40" width="200" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task1_di" bpmnElement="Task1">
+        <dc:Bounds x="280" y="40" width="200" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task2_di" bpmnElement="Task2">
+        <dc:Bounds x="520" y="40" width="200" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

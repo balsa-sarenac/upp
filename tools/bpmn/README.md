@@ -1,5 +1,20 @@
 # BPMN diagrams for class 2
 
+## Class 3 drafts
+
+```sh
+python3 tools/bpmn/class3.py
+node tools/bpmn/render.mjs 2026-2027/vjezbe/class3/bpmn-class3
+```
+
+The optional renderer argument selects a diagram folder containing
+`manifest.json` and skips the class 2 derived views. Without an argument,
+the existing class 2 workflow is unchanged. The class 3 generator checks
+unique XML IDs and local references before writing each model.
+Class 3 models are conceptual examples, not configured for deployment.
+
+## Class 2 workflow
+
 The editable sources are BPMN 2.0 XML files in
 `2026-2027/vjezbe/class2/bpmn-class2/`. Open them in Camunda Modeler or
 https://demo.bpmn.io/. They are conceptual models with

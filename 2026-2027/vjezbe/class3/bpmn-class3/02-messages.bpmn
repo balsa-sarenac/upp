@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions" targetNamespace="https://upp.example/class3">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:startEvent id="Start" name="">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="Send" name="Послати наруџбину" messageRef="OrderMessage">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="Receive" name="Примити одговор" messageRef="ReplyMessage">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:boundaryEvent id="Timeout" name="Два дана" attachedToRef="Receive" cancelActivity="true">
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration>P2D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:boundaryEvent>
+    <bpmn:exclusiveGateway id="Decision" name="Прихваћено?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Accepted" name="Прихваћено">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Rejected" name="Одбијено">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Notify" name="Обавијестити: нема одговора">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Expired" name="">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="Send" name="" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Send" targetRef="Receive" name="" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Receive" targetRef="Decision" name="" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Decision" targetRef="Accepted" name="да" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Decision" targetRef="Rejected" name="не" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Timeout" targetRef="Notify" name="" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Notify" targetRef="Expired" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Buyer_di" bpmnElement="Buyer" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1200" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Supplier_di" bpmnElement="Supplier" isHorizontal="true">
+        <dc:Bounds x="20" y="430" width="1200" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="80" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="20" y="146" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Send_di" bpmnElement="Send">
+        <dc:Bounds x="180" y="80" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Receive_di" bpmnElement="Receive">
+        <dc:Bounds x="500" y="80" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Timeout_di" bpmnElement="Timeout">
+        <dc:Bounds x="610" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="186" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Decision_di" bpmnElement="Decision" isMarkerVisible="true">
+        <dc:Bounds x="770" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="60" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Accepted_di" bpmnElement="Accepted">
+        <dc:Bounds x="1080" y="50" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1020" y="94" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Rejected_di" bpmnElement="Rejected">
+        <dc:Bounds x="1080" y="150" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1020" y="194" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Notify_di" bpmnElement="Notify">
+        <dc:Bounds x="730" y="220" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Expired_di" bpmnElement="Expired">
+        <dc:Bounds x="1080" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1020" y="286" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SupplierStart_di" bpmnElement="SupplierStart">
+        <dc:Bounds x="242" y="482" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="182" y="526" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Handle_di" bpmnElement="Handle">
+        <dc:Bounds x="330" y="460" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Reply_di" bpmnElement="Reply">
+        <dc:Bounds x="520" y="460" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SupplierEnd_di" bpmnElement="SupplierEnd">
+        <dc:Bounds x="900" y="482" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="840" y="526" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="116" y="120.0" />
+        <di:waypoint x="180" y="120.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="120.0" />
+        <di:waypoint x="500" y="120.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="660" y="120.0" />
+        <di:waypoint x="770" y="120.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="795" y="95" />
+        <di:waypoint x="795" y="68" />
+        <di:waypoint x="1080" y="68" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872.5" y="38.0" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="820" y="120" />
+        <di:waypoint x="1000" y="120" />
+        <di:waypoint x="1000" y="168" />
+        <di:waypoint x="1080" y="168" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="845.0" y="90.0" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="628" y="178" />
+        <di:waypoint x="628" y="260" />
+        <di:waypoint x="730" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="950" y="260.0" />
+        <di:waypoint x="1080" y="260.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="278" y="500.0" />
+        <di:waypoint x="330" y="500.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="490" y="500.0" />
+        <di:waypoint x="520" y="500.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="680" y="500.0" />
+        <di:waypoint x="900" y="500.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="260" y="160" />
+        <di:waypoint x="260" y="482" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="270" y="350" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="560" y="460" />
+        <di:waypoint x="560" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="350" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Buyer" name="Набавка" processRef="Process" />
+    <bpmn:participant id="Supplier" name="Добављач" processRef="SupplierProcess" />
+    <bpmn:messageFlow id="Flow_11" sourceRef="Send" targetRef="SupplierStart" name="наруџбина + ID" />
+    <bpmn:messageFlow id="Flow_12" sourceRef="Reply" targetRef="Receive" name="одговор + ID" />
+  </bpmn:collaboration>
+  <bpmn:process id="SupplierProcess" isExecutable="false">
+    <bpmn:startEvent id="SupplierStart" name="Наруџбина">
+      <bpmn:messageEventDefinition messageRef="OrderMessage" />
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Handle" name="Обрадити наруџбину">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sendTask id="Reply" name="Послати одговор" messageRef="ReplyMessage">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="SupplierEnd" name="">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="SupplierStart" targetRef="Handle" name="" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Handle" targetRef="Reply" name="" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Reply" targetRef="SupplierEnd" name="" />
+  </bpmn:process>
+  <bpmn:message id="OrderMessage" name="Наруџбина + ID" />
+  <bpmn:message id="ReplyMessage" name="Одговор + ID" />
+</bpmn:definitions>

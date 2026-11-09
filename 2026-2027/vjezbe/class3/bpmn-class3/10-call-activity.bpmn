@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions" targetNamespace="https://upp.example/class3">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:startEvent id="Start" name="">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:callActivity id="Call" name="Провјерити добављача" calledElement="SupplierCheck">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="Decision" name="Прихватљив?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="Order" name="Послати наруџбину">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="End" name="">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Notify" name="Обавијестити: добављач одбијен">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Rejected" name="">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="Call" name="" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Call" targetRef="Decision" name="" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Decision" targetRef="Order" name="да" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Decision" targetRef="Notify" name="не" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Order" targetRef="End" name="" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Notify" targetRef="Rejected" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Process">
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="40" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-20" y="146" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_di" bpmnElement="Call">
+        <dc:Bounds x="140" y="80" width="200" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Decision_di" bpmnElement="Decision" isMarkerVisible="true">
+        <dc:Bounds x="420" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="295" y="60" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Order_di" bpmnElement="Order">
+        <dc:Bounds x="560" y="20" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="820" y="42" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="760" y="86" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Notify_di" bpmnElement="Notify">
+        <dc:Bounds x="560" y="170" width="200" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Rejected_di" bpmnElement="Rejected">
+        <dc:Bounds x="820" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="760" y="236" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="76" y="120.0" />
+        <di:waypoint x="140" y="120.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="120.0" />
+        <di:waypoint x="420" y="120.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="445" y="95" />
+        <di:waypoint x="445" y="60" />
+        <di:waypoint x="560" y="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437.5" y="30.0" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="445" y="145" />
+        <di:waypoint x="445" y="210" />
+        <di:waypoint x="560" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437.5" y="180.0" width="130" height="44" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="720" y="60.0" />
+        <di:waypoint x="820" y="60.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="760" y="210.0" />
+        <di:waypoint x="820" y="210.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

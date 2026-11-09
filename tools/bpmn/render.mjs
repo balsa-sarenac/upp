@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../..');
-const dir=path.join(root,'2026-2027/vjezbe/class2/bpmn-class2');
+const dir=path.resolve(root,process.argv[2]??'2026-2027/vjezbe/class2/bpmn-class2');
 const manifest=JSON.parse(await fs.readFile(path.join(dir,'manifest.json'),'utf8'));
 const browser=await chromium.launch({headless:true,...(process.env.BPMN_BROWSER ? {executablePath:process.env.BPMN_BROWSER} : {})});
 const page=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:2});
@@ -28,6 +28,11 @@ for(const item of manifest){
  await shot.locator('svg').screenshot({path:path.join(dir,item.name+'.png')});
  await shot.close();
  console.log(item.name, result.warnings.length ? result.warnings : 'OK');
+}
+if(process.argv[2]){
+ await browser.close();
+ await fs.writeFile(path.join(dir,'validation.json'),JSON.stringify({renderer:'bpmn-js 18.31.1',models:manifest.length,importWarnings:failures},null,2)+'\n');
+ process.exit(failures.length?1:0);
 }
 // Coloured sequence flows show successive states of one process instance.
 const views=[

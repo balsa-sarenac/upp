@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions" targetNamespace="https://upp.example/class3">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:startEvent id="Start" name="">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="Send" name="Послати наруџбину">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:eventBasedGateway id="Wait" name="Шта стиже прво?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Confirm" name="Потврда">
+      <bpmn:messageEventDefinition messageRef="ConfirmMessage" />
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Reject" name="Одбијање">
+      <bpmn:messageEventDefinition messageRef="RejectMessage" />
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Timer" name="Два дана">
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration>P2D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Yes" name="Прихваћено">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="No" name="Одбијено">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Notify" name="Обавијестити: нема одговора">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End" name="">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="Send" name="" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Send" targetRef="Wait" name="" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Wait" targetRef="Confirm" name="" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Wait" targetRef="Reject" name="" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Wait" targetRef="Timer" name="" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Confirm" targetRef="Yes" name="" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Reject" targetRef="No" name="" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Timer" targetRef="Notify" name="" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Notify" targetRef="End" name="" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Process">
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="40" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-20" y="226" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Send_di" bpmnElement="Send">
+        <dc:Bounds x="140" y="160" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Wait_di" bpmnElement="Wait">
+        <dc:Bounds x="390" y="175" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="265" y="140" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Confirm_di" bpmnElement="Confirm">
+        <dc:Bounds x="570" y="60" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="510" y="104" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Reject_di" bpmnElement="Reject">
+        <dc:Bounds x="570" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="510" y="226" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Timer_di" bpmnElement="Timer">
+        <dc:Bounds x="570" y="300" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="510" y="344" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Yes_di" bpmnElement="Yes">
+        <dc:Bounds x="1000" y="60" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="940" y="104" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="No_di" bpmnElement="No">
+        <dc:Bounds x="1000" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="940" y="226" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Notify_di" bpmnElement="Notify">
+        <dc:Bounds x="700" y="278" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="1000" y="300" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="940" y="344" width="160" height="55" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="76" y="200.0" />
+        <di:waypoint x="140" y="200.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="300" y="200.0" />
+        <di:waypoint x="390" y="200.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="415" y="175" />
+        <di:waypoint x="415" y="78" />
+        <di:waypoint x="570" y="78" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="440" y="200.0" />
+        <di:waypoint x="570" y="200.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="415" y="225" />
+        <di:waypoint x="415" y="318" />
+        <di:waypoint x="570" y="318" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="606" y="78.0" />
+        <di:waypoint x="1000" y="78.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="606" y="200.0" />
+        <di:waypoint x="1000" y="200.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="606" y="318.0" />
+        <di:waypoint x="700" y="318.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="920" y="318.0" />
+        <di:waypoint x="1000" y="318.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn:message id="ConfirmMessage" name="Потврда + број наруџбине" />
+  <bpmn:message id="RejectMessage" name="Одбијање + број наруџбине" />
+</bpmn:definitions>
