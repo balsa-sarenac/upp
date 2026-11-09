@@ -2,7 +2,6 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions" targetNamespace="https://upp.example/class3">
   <bpmn:process id="Process" isExecutable="false">
     <bpmn:task id="Task" name="Задатак" />
-    <bpmn:subProcess id="Sub" name="Потпроцес: дио овог модела" />
     <bpmn:callActivity id="Call" name="Call activity: засебан процес" calledElement="Other" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram">
@@ -10,11 +9,8 @@
       <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
         <dc:Bounds x="40" y="40" width="200" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Sub_di" bpmnElement="Sub" isExpanded="false">
-        <dc:Bounds x="280" y="40" width="200" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Call_di" bpmnElement="Call">
-        <dc:Bounds x="520" y="40" width="200" height="80" />
+        <dc:Bounds x="280" y="40" width="200" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

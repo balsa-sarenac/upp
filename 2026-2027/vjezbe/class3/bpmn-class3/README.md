@@ -50,9 +50,9 @@
 
 [BPMN](08-correction-loop.bpmn) · [SVG](08-correction-loop.svg)
 
-## Задатак, потпроцес и call activity
+## Задатак и call activity
 
-![Задатак, потпроцес и call activity](09-reuse-kinds.png)
+![Задатак и call activity](09-reuse-kinds.png)
 
 [BPMN](09-reuse-kinds.bpmn) · [SVG](09-reuse-kinds.svg)
 

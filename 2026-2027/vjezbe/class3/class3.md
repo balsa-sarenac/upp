@@ -183,13 +183,12 @@ fontsize: 9pt
 {\centering
 ```
 
-![](bpmn-class3/09-reuse-kinds.svg){height=55% aria-label="Задатак, потпроцес и call activity"}
+![](bpmn-class3/09-reuse-kinds.svg){height=55% aria-label="Задатак и call activity"}
 
 ```{=latex}
 \par}
 ```
 
-- **Потпроцес** је дио истог модела.
 - **Call activity** (дебела ивица) позива засебан процес.
 
 ## Задатак: провјера добављача
